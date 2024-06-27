@@ -1,3 +1,5 @@
+import headerImage from '../../src/assets/images/Group 9543@2x.png';
+
 export const ERROR_MESSAGES = {
     EMAIL_REQUIRED: 'Email is required',
     EMAIL_INVALID: 'Email address is invalid',
@@ -16,4 +18,9 @@ export const BUTTON_TEXT = {
 
 export const TITLES = {
     LOGIN: 'Login'
+};
+
+export const HEADER_TEXT = {
+  HEADER_IMAGE: headerImage,
+  ALT: 'Image'
 };
