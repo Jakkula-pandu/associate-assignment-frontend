@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Table from '../Table/Table';
+import TableData from '../Table/Table';
 
 const columns = [
   { Header: 'Name', accessor: 'name', sortable: true },
@@ -57,7 +57,7 @@ const Batches = () => {
 
   return (
     <div>
-      <Table
+      <TableData
         columns={columns}
         data={data}
         onSort={handleSort}
