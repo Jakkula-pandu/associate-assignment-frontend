@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
-import './Table.css'
+import './Table.css';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 
-const Table = ({ columns, data, onSort, onSearch, searchValue }) => {
+const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
     const [sortConfig, setSortConfig] = useState(null);
 
     const handleSort = (accessor) => {
@@ -34,11 +36,11 @@ const Table = ({ columns, data, onSort, onSearch, searchValue }) => {
             </div>
 
             <div className="table-responsive tableFixHead table-style">
-                <table className="table table-hover table-container">
-                    <thead className="table-heading">
-                        <tr>
+                <Table className="table table-hover table-container">
+                    <Thead className="table-heading">
+                        <Tr>
                             {columns.map((column) => (
-                                <th key={column.accessor}>
+                                <Th key={column.accessor}>
                                     {column.Header}
                                     {column.sortable && (
                                         <span
@@ -50,24 +52,25 @@ const Table = ({ columns, data, onSort, onSearch, searchValue }) => {
                                             ) : ' ⬍'}
                                         </span>
                                     )}
-                                </th>
+                                </Th>
                             ))}
-                        </tr>
-                    </thead>
-                    <tbody>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
                         {data.map((row, rowIndex) => (
-                            <tr key={rowIndex}>
+                            <Tr key={rowIndex}>
                                 {columns.map((column) => (
-                                    <td key={column.accessor}>{row[column.accessor]}</td>
+                                    <Td key={column.accessor}>{row[column.accessor]}</Td>
                                 ))}
-                            </tr>
+                            </Tr>
                         ))}
-                    </tbody>
-                </table>
+                    </Tbody>
+                </Table>
+                
             </div>
         </div>
 
     );
 };
 
-export default Table;
+export default TableData;
