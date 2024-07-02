@@ -1,0 +1,21 @@
+footer.bg-light.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa !important;
+  }
+  
+  footer .text-center {
+    background-color: #1c1e42;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  footer .text-center div {
+    padding-top: 2px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+  }
+  

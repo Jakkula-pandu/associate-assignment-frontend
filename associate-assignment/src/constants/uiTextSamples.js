@@ -24,3 +24,7 @@ export const HEADER_TEXT = {
   HEADER_IMAGE: headerImage,
   ALT: 'Image'
 };
+
+export const FOOTER={
+    FOOTER_TEXT:"©Bilvantis All rights Reserved."
+}
