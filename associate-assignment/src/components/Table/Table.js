@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import './Table.css';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
+import OffcanvasComponent from '../FormModal/FormModal';
+import TabButtons from '../AddFormButton/AddFormButton';
+
 
 const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
     const [sortConfig, setSortConfig] = useState(null);
@@ -15,22 +18,34 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
         setSortConfig({ key: accessor, direction });
         onSort(accessor, direction);
     };
+    // const [show, setShow] = useState(false);
+    const [activeTab, setActiveTab] = useState('tab1');
+
+    // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
 
     return (
         <div className="fluid-container mt-3">
             <div className='row'>
                 <div className='col-10'>
-                <input
-                    type="text"
-                    className="form-control mb-3"
-                    placeholder="Search..."
-                    value={searchValue}
-                    onChange={(e) => onSearch(e.target.value)}
-                />
+                    <input
+                        type="text"
+                        className="form-control mb-3"
+                        placeholder="Search..."
+                        value={searchValue}
+                        onChange={(e) => onSearch(e.target.value)}
+                    />
                 </div>
-             
+
                 <div className='col-2'>
-                    <button className='btn btn-primary'>Add Form</button>
+                    <TabButtons activeTab={activeTab} setActiveTab={setActiveTab} />
+                    {/* <OffcanvasComponent
+                        show={show}
+                        handleClose={handleClose}
+                        activeTab={activeTab}
+                    /> */}
+                    {/* <button className='btn btn-primary' onClick={handleShow}>Add Form</button> */}
+                    {/* <OffcanvasComponent show={show} handleClose={handleClose} /> */}
                 </div>
 
             </div>
@@ -66,7 +81,7 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
                         ))}
                     </Tbody>
                 </Table>
-                
+
             </div>
         </div>
 
