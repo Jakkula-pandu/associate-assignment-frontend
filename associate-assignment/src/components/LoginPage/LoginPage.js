@@ -43,8 +43,6 @@ function LoginPage() {
         const isValid = validate();
         if (isValid) {
             // Perform login logic here
-            console.log('Email:', formData.email);
-            console.log('Password:', formData.password);
             setErrors({ email: '', password: '' }); // Clear errors
         }
     };

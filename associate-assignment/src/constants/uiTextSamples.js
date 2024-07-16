@@ -26,5 +26,8 @@ export const HEADER_TEXT = {
 };
 
 export const FOOTER={
-    FOOTER_TEXT:"©Bilvantis All rights Reserved."
+    FOOTER_TEXT:"©Bilvantis All rights Reserved.",
+    INSTAGRAM_LINK:"https://www.instagram.com/yourprofile",
+    LINKEDIN_LINK:"https://www.linkedin.com",
+    TWITTER_LINK:"https://www.twitter.com"
 }
