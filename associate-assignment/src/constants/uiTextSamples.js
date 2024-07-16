@@ -1,4 +1,4 @@
-import headerImage from '../../src/assets/images/Group 9543@2x.png';
+import headerImage from '../../src/assets/images/Bilvantis_white_logo.png';
 
 export const ERROR_MESSAGES = {
     EMAIL_REQUIRED: 'Email is required',
