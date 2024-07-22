@@ -3,19 +3,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from './components/LoginPage/LoginPage';
 import Header from './components/Header/Header';
 import Dashboard from './components/Dashboard/Dashboard';
-import Footer from './components/Footer/Footer'
+import Footer from './components/Footer/Footer';
+import store from './store/store';
+import Users from './components/Users/Users';
+import { Provider } from 'react-redux';
 
-function App() {
-    return (
-        <BrowserRouter>
+const App = () => (
+    <Provider store={store}>
+      <BrowserRouter>
         <Header />
-            <Routes>   
-                <Route path="/" element={<LoginPage />}></Route>
-                <Route path="/Dashboard" element={<Dashboard />}></Route>
-            </Routes>
-          <Footer/>
-        </BrowserRouter>
-    );
-}
-
-export default App;
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/Users" element={<Users />} /> 
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </Provider>
+  );
+  
+  export default App;

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-// import offcanvasReducer from './formModalReducers';
 import tabReducer from './tabReducer';
+import userReducer from './apireducers'; 
 
 const rootReducer = combineReducers({
-//   offcanvas: offcanvasReducer,
     tab : tabReducer,
+    userdata: userReducer,
 });
 
 export default rootReducer;

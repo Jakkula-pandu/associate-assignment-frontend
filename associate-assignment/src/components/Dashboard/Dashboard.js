@@ -7,6 +7,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import Batches from '../Batches/Batches';
 import Assessments from '../Assessments/Assessments';
 import QuestionFormApp from '../../Questions/Questions';
+import Users from '../Users/Users';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -15,11 +16,6 @@ import './Dashboard.css'
 
 
 const Dashboard = () => {
-  // const [value, setValue] = React.useState('1');
-
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
   const selectedTab = useSelector((state) => state.tab.selectedTab);
   const dispatch = useDispatch();
 
@@ -35,12 +31,13 @@ const Dashboard = () => {
             <Tab label="Batches" value="Batches" />
             <Tab label="Assessment" value="Assessment" />
             <Tab label="Users" value="Users" />
-            <Tab label="Questions" value="4"/>
+            <Tab label="Questions" value="Questions"/>
           </TabList>
         </Box>
         <TabPanel value="Batches"><Batches/></TabPanel>
         <TabPanel value="Assessment"><Assessments/></TabPanel>
-        <TabPanel value="Users">Users</TabPanel>
+        <TabPanel value="Users"><Users/></TabPanel>
+        <TabPanel value="Questions"><QuestionFormApp/></TabPanel>
       </TabContext>
     </div>
   );
