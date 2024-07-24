@@ -43,25 +43,17 @@ function LoginPage() {
         const isValid = validate();
         if (isValid) {
             // Perform login logic here
-            console.log('Email:', formData.email);
-            console.log('Password:', formData.password);
             setErrors({ email: '', password: '' }); // Clear errors
         }
     };
 
     return (
         <div className="login-page5">
-            {/* <h1 className='login-title'>{TITLES.LOGIN}</h1> */}
             <div className='login-container shadow-lg'>
                 <div className='left-container'>
-                    
-
-                    <img src={require('../../assets/images/Group 9543@2x.png')} />
-                    
+                    <img src={require('../../assets/images/Group 9543@2x.png')} />                   
                     <div className='left-sub-container'>
-
                     </div>
-
                 </div>
                 <div className='right-container'>
                 <div class="swinging-word">
@@ -95,12 +87,8 @@ function LoginPage() {
                     </div>
                 </form>
             </div>
-
                 </div>
-           
-
             </div>
-          
         </div>
     );
 }

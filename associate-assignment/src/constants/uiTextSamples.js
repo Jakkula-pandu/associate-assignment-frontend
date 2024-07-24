@@ -1,4 +1,4 @@
-import headerImage from '../../src/assets/images/Group 9543@2x.png';
+import headerImage from '../../src/assets/images/Bilvantis_white_logo.png';
 
 export const ERROR_MESSAGES = {
     EMAIL_REQUIRED: 'Email is required',
@@ -24,3 +24,10 @@ export const HEADER_TEXT = {
   HEADER_IMAGE: headerImage,
   ALT: 'Image'
 };
+
+export const FOOTER={
+    FOOTER_TEXT:"©Bilvantis All rights Reserved.",
+    INSTAGRAM_LINK:"https://www.instagram.com/yourprofile",
+    LINKEDIN_LINK:"https://www.linkedin.com",
+    TWITTER_LINK:"https://www.twitter.com"
+}

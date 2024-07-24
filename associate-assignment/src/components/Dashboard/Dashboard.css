@@ -1,7 +1,7 @@
 .dashboard-container{
     height: 90vh;
     overflow:scroll;
-    background-color: rgb(242, 245, 250);
+    background-color: #F0F7FB;
 }
 
 .dashboard-container::-webkit-scrollbar { 

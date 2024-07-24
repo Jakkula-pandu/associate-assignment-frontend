@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #dce7fc;
+    background-image: linear-gradient(to right, #0B1A5E, #345EE5, #345EE5, #0B1A5E);
     height: 10vh;
     box-sizing: border-box;
 }
