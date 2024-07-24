@@ -1,8 +1,6 @@
 
 [data-color-mode*='dark'] .login-page5,
 .login-page5 {
-  /* --login-bg: #5B6EF4; */
-   /* --login-bg: #c2c8f6; */
   --login-inner-bg: white;
   --login-color: #fff;
   --login-input: #333;
@@ -10,14 +8,6 @@
   --login-input-before: rgba(69, 105, 144, 0.15);
   --login-input-after: rgba(2, 128, 144, 0.2);
   --login-btn: #fff;
-  /* background-image: url('../../assets//images/logintwo.jpg'); */
-  /* background-size: cover; */
-  /* background-image: linear-gradient(to bottom right, #2A3A7C, #6A89FF); */
-  /* background-image: linear-gradient(to bottom right, #dfe5fc, #f5f7fe); */
-
-
-
-
 }
 
 [data-color-mode*='light'] .login-page5 {
@@ -150,7 +140,6 @@
 .left-container{
   height: 100%;
   width: 70%;
-  /* background-image: url('../../assets/images//pageonelogin.png'); */
   background-size: cover;
   display: flex;
   flex-direction: column;

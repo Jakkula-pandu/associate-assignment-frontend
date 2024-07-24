@@ -1,8 +1,6 @@
 .dashboard-container{
     height: 90vh;
     overflow:scroll;
-    /* background-color:  #F5F5F5; */
-    /* background-image: linear-gradient(to right, #F4F4F5, #F3F1F4, #EEF0F5, #EBF0F5,#F0F0F5); */
     background-color: #F0F7FB;
 }
 
