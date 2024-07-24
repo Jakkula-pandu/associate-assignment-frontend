@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import TableData from "../Table/Table";
 import { fetchData } from "../../actions/apiactions";
 import { useSelector, useDispatch } from "react-redux";
-
+import Pagination from "../Pagination/Pagination";
 const CheckButton = ({ row }) => {
   const handleClick = () => {
     console.log("Button clicked for:", row);
@@ -19,14 +19,24 @@ const columns = [
 ];
 
 const Users = () => {
+  const [page, setPage] = useState(1);
   const [localData, setLocalData] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const dataState = useSelector((state) => state.userdata);
+  const totalItems = useSelector(state => state.totalItems);
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchData());
-  }, [dispatch]);
+    dispatch(fetchData(currentPage));
+  }, [dispatch, currentPage]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+
+
   useEffect(() => {
     if (dataState.users.length > 0) {
       const newData = dataState.users.map((row, index) => ({  
@@ -59,7 +69,13 @@ const Users = () => {
     );
     setLocalData(filteredData);
   };
+  const handleNextPage = () => {
+    setCurrentPage(prevPage => prevPage + 1);
+  };
 
+  const handlePrevPage = () => {
+    setCurrentPage(prevPage => Math.max(prevPage - 1, 1));
+  };
   return (
     <div>
       <TableData
@@ -69,8 +85,15 @@ const Users = () => {
         onSearch={handleSearch}
         searchValue={searchValue}
       />
+
+      <div>
+        <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+        <button onClick={handleNextPage}>Next</button>
+      </div>
     </div>
+  
   );
 };
 
 export default Users;
+

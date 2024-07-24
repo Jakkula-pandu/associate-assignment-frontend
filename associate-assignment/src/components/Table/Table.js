@@ -27,15 +27,15 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
     return (
         <div className="fluid-container mt-3">
             <div className='row'>
-                <div className='col-10'>
+                {/* <div className='col-10'>
                     <input
                         type="text"
-                        className="form-control mb-3"
+                        className="form-control mb-3"   
                         placeholder="Search..."
                         value={searchValue}
                         onChange={(e) => onSearch(e.target.value)}
                     />
-                </div>
+                </div> */}
 
                 <div className='col-2'>
                     <TabButtons activeTab={activeTab} setActiveTab={setActiveTab} />

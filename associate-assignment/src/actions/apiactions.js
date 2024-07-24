@@ -19,10 +19,10 @@ export const fetchDataFailure = (error) => ({
   payload: error
 });
 
-export const fetchData = () => {
+export const fetchData = (page = 1) => {
   return (dispatch) => {
     dispatch(fetchDataRequest());
-    axios.get(API_URLS.user.FETCH_USER)
+    axios.get(`${API_URLS.user.FETCH_USER}?page=${page}`)
       .then(response => {
         const data = response.data.allUsers;
         dispatch(fetchDataSuccess(data));

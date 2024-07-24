@@ -6,7 +6,8 @@
     /* background-color:#2C3E50; */
     /* background-color: #4A6FA5; */
     /* background-image: linear-gradient(to right, #132879, #345EE6, #345EE6, #132879); */
-    background-image: linear-gradient(to right, #0B1A5E, #345EE5, #345EE5, #0B1A5E);
+    /* background-image: linear-gradient(to right, #0B1A5E, #345EE5, #345EE5, #0B1A5E); */
+    background-color: #003d7c;
     height: 10vh;
     box-sizing: border-box;
 }
