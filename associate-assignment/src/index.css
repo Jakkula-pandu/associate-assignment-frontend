@@ -5,4 +5,7 @@ body {
     color: #000000 !important;
 }
 
-html, body { height: 100%; }
+html,
+body {
+    height: 100%;
+}

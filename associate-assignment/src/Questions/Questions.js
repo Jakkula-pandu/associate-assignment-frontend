@@ -2,33 +2,35 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Questions.css'
 
-const CreateFormService = () => {
-  let selectedQuestions = [];
-  const setOption = (options) => {
-    selectedQuestions = options;
-  };
+// const CreateFormService = () => {
+//   let selectedQuestions = [];
+//   const setOption = (options) => {
+//     selectedQuestions = options;
+//   };
 
-  const getOption = () => {
-    return selectedQuestions;
-  };
+//   const getOption = () => {
+//     return selectedQuestions;
+//   };
 
-  return {
-    setOption,
-    getOption,
-  };
-};
+//   return {
+//     setOption,
+//     getOption,
+//   };
+// };
 
 const MyForm = () => {
   const [expand, setExpand] = useState(false);
   const [user, setUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  const history = useNavigate();
-  const dataService = CreateFormService();
+  // const history = useNavigate();
+  // const dataService = CreateFormService();
 
-  const submit = () => {
+  const submit = (event) => {
+    event.preventDefault()
     const selectedQuestions = user;
-    dataService.setOption(selectedQuestions);
-    history.push('/formAnswers');
+    console.log("selectedQuestions>>>", selectedQuestions);
+    // dataService.setOption(selectedQuestions);
+    // history.push('/formAnswers');
   };
 
   const addText = () => {

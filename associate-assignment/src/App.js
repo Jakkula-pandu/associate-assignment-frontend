@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Footer from './components/Footer/Footer';
 import store from './store/store';
 import Users from './components/Users/Users';
+import UserDashboard from './components/UserScreens/UserDashboard/UserDashboard';
 import { Provider } from 'react-redux';
 
 const App = () => (
@@ -16,6 +17,7 @@ const App = () => (
           {/* <Route path="/" element={<LoginPage />} /> */}
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Users" element={<Users />} /> 
+          <Route path="/UserDashboard" element={<UserDashboard/>} />
         </Routes>
         <Footer />
       </BrowserRouter>
