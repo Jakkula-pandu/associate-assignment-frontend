@@ -25,7 +25,6 @@ export const fetchData = () => {
     axios.get(`${API_URLS.USER.FETCH_USER}`)
       .then(response => {
         const data = response.data;
-        console.log("response>>>>>>lll", data);
         dispatch(fetchDataSuccess(data));
       })
       .catch(error => {

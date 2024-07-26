@@ -12,7 +12,6 @@ const AddBatchForm = () => {
   });
   const dispatch = useDispatch();
   const users =  useSelector((state) => state.userdata);
-  console.log("users>>>>>>>>>>>>>>",users.users.allUsers);
   const loading = useSelector(state => state.userdata.loading);
   const error = useSelector(state => state.userdata.error);
 
@@ -78,7 +77,6 @@ const AddBatchForm = () => {
       setErrors(newErrors);
     } else {
       dispatch(addBatch(formData));
-      console.log("Form submitted:", formData);
       // Reset form and errors if needed
       setFormData({ batch_name: "", username: [] });
       setErrors({});
@@ -90,8 +88,6 @@ const userOptions = Array.isArray(users.users.allUsers) ?
     value: user.username,
     label: user.username,
   })) : [];
-
-  console.log("User options:", userOptions);
 
   return (
     <form onSubmit={handleSubmit}>
