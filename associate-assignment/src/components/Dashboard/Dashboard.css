@@ -9,3 +9,7 @@
 .dashboard-container::-webkit-scrollbar { 
     display: none;  
 }
+
+.css-13xfq8m-MuiTabPanel-root{
+    padding: 0px 24px !important;
+}

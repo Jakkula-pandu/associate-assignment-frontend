@@ -2,7 +2,7 @@ import { FETCH_USER_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from '../acti
 
 const initialState = {
   loading: false,
-  users: [],
+  users: {},
   error: ''
 };
 
