@@ -12,7 +12,7 @@ const OffcanvasComponent = ({ show, handleClose, activeTab }) => {
       onHide={handleClose}
     >
       <Offcanvas.Header closeButton>
-        {activeTab === "tab1" && <Offcanvas.Title className="font">Add batch</Offcanvas.Title>}
+        {activeTab === "tab1" && <Offcanvas.Title className="form-title">Add batch</Offcanvas.Title>}
       </Offcanvas.Header>
       <Offcanvas.Body className="mb-5">
         {activeTab === "tab1" && <AddBatchForm   />}

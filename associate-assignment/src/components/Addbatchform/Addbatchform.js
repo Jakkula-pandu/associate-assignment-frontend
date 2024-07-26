@@ -11,7 +11,8 @@ const AddBatchForm = () => {
     username: [], // Change to an array for multi-select
   });
   const dispatch = useDispatch();
-  const users = useSelector(state => state.userdata.users);
+  const users =  useSelector((state) => state.userdata);
+  console.log("users>>>>>>>>>>>>>>",users.users.allUsers);
   const loading = useSelector(state => state.userdata.loading);
   const error = useSelector(state => state.userdata.error);
 
@@ -45,10 +46,10 @@ const AddBatchForm = () => {
   const handleSelectChange = (selectedOptions) => {
     setFormData({
       ...formData,
-      username: selectedOptions.map(option => option.value),
+      username: selectedOptions ? selectedOptions.map(option => option.value) : [],
     });
 
-    if (selectedOptions.length === 0) {
+    if (!selectedOptions || selectedOptions.length === 0) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         username: "At least one User Name is required",
@@ -84,10 +85,13 @@ const AddBatchForm = () => {
     }
   };
 
-  const userOptions = users.map(user => ({
+const userOptions = Array.isArray(users.users.allUsers) ? 
+  users.users.allUsers.map(user => ({
     value: user.username,
     label: user.username,
-  }));
+  })) : [];
+
+  console.log("User options:", userOptions);
 
   return (
     <form onSubmit={handleSubmit}>
