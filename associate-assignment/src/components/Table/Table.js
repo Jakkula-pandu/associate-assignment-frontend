@@ -19,11 +19,7 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
         setSortConfig({ key: accessor, direction });
         onSort(accessor, direction);
     };
-    // const [show, setShow] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
-
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
 
     return (
         <div className="fluid-container mt-3">

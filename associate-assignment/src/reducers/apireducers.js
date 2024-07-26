@@ -1,4 +1,4 @@
-import { FETCH_USER_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from '../actions/apiactions';
+import { FETCH_USER_DATA, FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from '../actionTypes/useractionstypes';
 
 const initialState = {
   loading: false,

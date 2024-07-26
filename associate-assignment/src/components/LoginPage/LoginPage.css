@@ -10,14 +10,6 @@
   --login-input-before: rgba(69, 105, 144, 0.15);
   --login-input-after: rgba(2, 128, 144, 0.2);
   --login-btn: #fff;
-  /* background-image: url('../../assets//images/logintwo.jpg'); */
-  /* background-size: cover; */
-  /* background-image: linear-gradient(to bottom right, #2A3A7C, #6A89FF); */
-  /* background-image: linear-gradient(to bottom right, #dfe5fc, #f5f7fe); */
-
-
-
-
 }
 
 [data-color-mode*='light'] .login-page5 {
