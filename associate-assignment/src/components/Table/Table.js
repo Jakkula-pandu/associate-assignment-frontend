@@ -5,6 +5,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import OffcanvasComponent from '../FormModal/FormModal';
 import TabButtons from '../AddFormButton/AddFormButton';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
@@ -27,15 +28,15 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
     return (
         <div className="fluid-container mt-3">
             <div className='row'>
-                {/* <div className='col-10'>
+                <div className='col-10'>
                     <input
                         type="text"
-                        className="form-control mb-3"   
+                        className="form-control mb-3"
                         placeholder="Search..."
                         value={searchValue}
                         onChange={(e) => onSearch(e.target.value)}
                     />
-                </div> */}
+                </div>
 
                 <div className='col-2'>
                     <TabButtons activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -63,8 +64,8 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
                                             style={{ cursor: 'pointer', marginLeft: '10px' }}
                                         >
                                             {sortConfig && sortConfig.key === column.accessor ? (
-                                                sortConfig.direction === 'ascending' ? ' 🔼' : ' 🔽'
-                                            ) : ' ⬍'}
+                                                sortConfig.direction === 'ascending' ? <i class="bi bi-arrow-up"></i> : <i class="bi bi-arrow-down"></i>
+                                            ) : <i class="bi bi-arrows-vertical"></i>}
                                         </span>
                                     )}
                                 </Th>

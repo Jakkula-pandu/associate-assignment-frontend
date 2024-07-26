@@ -24,7 +24,8 @@ export const fetchData = (page = 1) => {
     dispatch(fetchDataRequest());
     axios.get(`${API_URLS.user.FETCH_USER}?page=${page}`)
       .then(response => {
-        const data = response.data.allUsers;
+        const data = response.data;
+        console.log("response>>>>>>lll", data);
         dispatch(fetchDataSuccess(data));
       })
       .catch(error => {

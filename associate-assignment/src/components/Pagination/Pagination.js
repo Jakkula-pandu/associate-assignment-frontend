@@ -1,8 +1,7 @@
 import React from 'react';
-// import "./pagination.css"
-import './Pagination.css'
+import './Pagination.css';
 
-const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
+const Pagination = ({ currentPage, totalItems, itemsPerPage, onPageChange }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const handleNextPage = () => {
@@ -11,35 +10,18 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
     }
   };
 
-  const handlePreviousPage = () => {
+  const handlePrevPage = () => {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
     }
   };
- 
-
-  const renderPageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(
-        <button 
-          key={i} 
-          onClick={() => onPageChange(i)} 
-          className={i === currentPage ? 'active' : ''}
-        >
-          {i}
-        </button>
-      );
-    }
-    return pageNumbers;
-  };
 
   return (
-    <div className="pagination-div" style={{backgroundColor: "lightblue"}}>
-      <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-        Prev
+    <div className="pagination">
+      <button onClick={handlePrevPage} disabled={currentPage === 1}>
+        Previous
       </button>
-      {renderPageNumbers()}
+      <span>{`Page ${currentPage} of ${totalPages}`}</span>
       <button onClick={handleNextPage} disabled={currentPage === totalPages}>
         Next
       </button>

@@ -3,9 +3,7 @@ import TableData from '../Table/Table';
 
 const CheckButton = ({ row }) => {
   const handleClick = () => {
-    // Define the action to be performed on button click.
     console.log('Button clicked for:', row);
-    // Add more functionality as needed.
   };
 
   return <button onClick={handleClick}>Check</button>;
