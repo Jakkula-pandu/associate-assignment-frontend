@@ -1,0 +1,75 @@
+label{
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 500;
+}
+
+
+.total_container{
+    background-image: linear-gradient(to bottom, rgb(0, 153, 255), rgb(0, 213, 255));
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.first_card_container{
+    width: 60vw;
+    padding: 40px;
+    min-height: 100%;
+}
+
+.each_card{
+    padding: 5px 20px 20px 40px;
+    margin-bottom: 5px;
+    background-color: rgb(239, 243, 243);
+}
+
+.custom-outline-bottom {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    outline: none; /* Remove all outlines */
+    box-shadow: none; /* Remove any box shadows */
+    border-bottom: 1px solid #ffff; /* Retain only the bottom border */
+    margin-bottom:8px ;
+}
+.custom-outline-input{
+    border: 1px solid black;
+}
+
+
+.button-modify{
+    height: 45px;
+    background-color: rgb(61, 71, 253);
+    width: fit-content; 
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+    padding-left: 5px;
+}
+
+.toggle-button{
+    border: 0px solid;
+    background-color: transparent;
+    color: white;
+  
+    margin-right: 5px;
+}
+
+.each-button{
+    border-radius: 0px !important;
+}
+
+.star {
+    font-size: 44px; 
+    margin-bottom: 30px;
+}
+.radio-button-style{
+    border: 1px solid black !important;
+    float: left;
+    clear: both;
+    /* align-items: flex-start; */
+}

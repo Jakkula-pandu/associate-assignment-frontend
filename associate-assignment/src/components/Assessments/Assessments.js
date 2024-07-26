@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import TableData from '../Table/Table';
 
+const CheckButton = ({ row }) => {
+  const handleClick = () => {
+    console.log('Button clicked for:', row);
+  };
+
+  return <button onClick={handleClick}>Check</button>;
+};
+
 const columns = [
   { Header: 'S.No', accessor: 'sno', sortable: true },
   { Header: 'Assessment Name', accessor: 'assessmentName', sortable: true },
@@ -11,14 +19,14 @@ const columns = [
 ];
 
 const initialData = [
-  { sno: 1, assessmentName: 'Math Quiz', batchName: 'Batch A', attemptedCount: 25, unattemptedCount: 5, checkButton: <button >Check</button> },
-  { sno: 2, assessmentName: 'Science Test', batchName: 'Batch B', attemptedCount: 18, unattemptedCount: 12, checkButton: <button>Check</button> },
-  { sno: 3, assessmentName: 'History Exam', batchName: 'Batch C', attemptedCount: 20, unattemptedCount: 10, checkButton: <button>Check</button> },
-  { sno: 4, assessmentName: 'Geography Quiz', batchName: 'Batch D', attemptedCount: 22, unattemptedCount: 8, checkButton: <button>Check</button> },
-  { sno: 5, assessmentName: 'English Test', batchName: 'Batch E', attemptedCount: 30, unattemptedCount: 0, checkButton: <button>Check</button> },
-];
+  { sno: 1, assessmentName: 'Math Quiz', batchName: 'Batch A', attemptedCount: 25, unattemptedCount: 5 },
+  { sno: 2, assessmentName: 'Science Test', batchName: 'Batch B', attemptedCount: 18, unattemptedCount: 12 },
+  { sno: 3, assessmentName: 'History Exam', batchName: 'Batch C', attemptedCount: 20, unattemptedCount: 10 },
+  { sno: 4, assessmentName: 'Geography Quiz', batchName: 'Batch D', attemptedCount: 22, unattemptedCount: 8 },
+  { sno: 5, assessmentName: 'English Test', batchName: 'Batch E', attemptedCount: 30, unattemptedCount: 0 },
+].map((row, index) => ({ ...row, checkButton: <CheckButton row={row} key={index} /> }));
 
-const Assessments = () => {
+const Batches = () => {
   const [data, setData] = useState(initialData);
   const [searchValue, setSearchValue] = useState('');
 
@@ -54,4 +62,4 @@ const Assessments = () => {
   );
 };
 
-export default Assessments;
+export default Batches;
