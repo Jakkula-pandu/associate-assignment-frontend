@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import TableData from "../Table/Table";
-import { fetchData } from "../../actions/apiactions";
+import { fetchData } from "../../actions/useractions";
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../Pagination/Pagination";
 
 const CheckButton = ({ row }) => {
   const handleClick = () => {
-    console.log("Button clicked for:", row);
   };
   return <button onClick={handleClick}>Check</button>;
 };
