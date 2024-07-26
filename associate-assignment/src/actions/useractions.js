@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { API_URLS } from '../constants/Apiurls';
+import { FETCH_USER_DATA,FETCH_DATA_FAILURE,FETCH_DATA_SUCCESS } from '../actionTypes/useractionstypes';
 
-export const FETCH_USER_DATA = 'FETCH_USER_DATA';
-export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS';
-export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 
 export const fetchDataRequest = () => ({
   type: FETCH_USER_DATA
@@ -19,10 +17,12 @@ export const fetchDataFailure = (error) => ({
   payload: error
 });
 
-export const fetchData = (page = 1) => {
+
+
+export const fetchData = () => {
   return (dispatch) => {
     dispatch(fetchDataRequest());
-    axios.get(`${API_URLS.user.FETCH_USER}?page=${page}`)
+    axios.get(`${API_URLS.USER.FETCH_USER}`)
       .then(response => {
         const data = response.data.allUsers;
         dispatch(fetchDataSuccess(data));
@@ -32,3 +32,5 @@ export const fetchData = (page = 1) => {
       });
   };
 };
+
+
