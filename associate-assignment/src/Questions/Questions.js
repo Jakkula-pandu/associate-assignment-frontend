@@ -22,15 +22,12 @@ const MyForm = () => {
   const [expand, setExpand] = useState(false);
   const [user, setUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  // const history = useNavigate();
-  // const dataService = CreateFormService();
 
   const submit = (event) => {
     event.preventDefault()
     const selectedQuestions = user;
     console.log("selectedQuestions>>>", selectedQuestions);
     // dataService.setOption(selectedQuestions);
-    // history.push('/formAnswers');
   };
 
   const addText = () => {
