@@ -1,0 +1,190 @@
+
+[data-color-mode*='dark'] .login-page5,
+.login-page5 {
+  /* --login-bg: #5B6EF4; */
+   /* --login-bg: #c2c8f6; */
+  --login-inner-bg: white;
+  --login-color: #fff;
+  --login-input: #333;
+  --login-input-bg: #fff;
+  --login-input-before: rgba(69, 105, 144, 0.15);
+  --login-input-after: rgba(2, 128, 144, 0.2);
+  --login-btn: #fff;
+  /* background-image: url('../../assets//images/logintwo.jpg'); */
+  /* background-size: cover; */
+  /* background-image: linear-gradient(to bottom right, #2A3A7C, #6A89FF); */
+  /* background-image: linear-gradient(to bottom right, #dfe5fc, #f5f7fe); */
+
+
+
+
+}
+
+[data-color-mode*='light'] .login-page5 {
+  --login-bg: #f45b69;
+  --login-inner-bg: white;
+  --login-color: #fff;
+  --login-input: #333;
+  --login-input-bg: #fff;
+  --login-input-before: rgba(69, 105, 144, 0.15);
+  --login-input-after: rgba(2, 128, 144, 0.2);
+  --login-btn: #fff;
+  --login-btn-bg: #f45b69;
+  --login-btn-focus: #f24353;
+  --login-btn-hover: #f24353;
+  --login-btn-active: #d82a3b;
+  --login-footer: #ffffff99;
+}
+
+.login-page5 {
+  --gap: 15px;
+  --login-line-height: 1.5;
+  line-height: var(--login-line-height);
+  background-color: var(--login-bg);
+  color: var(--login-color);
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+
+
+.login-page5-inner {
+  gap: var(--gap);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--login-inner-bg);
+  color: var(--login-input);
+  padding: 40px 30px 30px 30px;
+  border-radius: 10px;
+  width: 400px;
+  transition: box-shadow 300ms;
+  box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+  overflow: hidden;
+  position: relative;
+  height: 40%;
+}
+
+.login-page5-inner::before,
+.login-page5-inner::after {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-top-left-radius: 40%;
+  border-top-right-radius: 45%;
+  border-bottom-left-radius: 35%;
+  border-bottom-right-radius: 40%;
+}
+
+.login-page5-inner::before {
+  left: 50%;
+  bottom: -130%;
+  background-color: #D6E8FF;
+  animation: wawes 6s infinite linear;
+}
+
+.login-page5-inner::after {
+  left: 55%;
+  bottom: -125%;
+  background-color: #BFCEFF;
+  animation: wawes 7s infinite linear;
+}
+
+@keyframes wawes {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.login-page5-inner>form>div>input {
+  display: block;
+  border-radius: 5px;
+  font-size: 16px;
+  background: var(--login-input-bg);
+  color: var(--login-input);
+  width: 100%;
+  border: 0;
+  padding: 10px 10px;
+  z-index: 1;
+  position: relative;
+  margin: 0 -10px;
+}
+
+
+.login-page5-inner>input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px var(--login-input-bg) inset;
+  color: var(--login-color);
+  -webkit-text-fill-color: var(--login-input) !important;
+}
+
+.login-title{
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.login-page5-inner>form>div>input::placeholder {
+  opacity: 0.8;
+}
+
+.login-container{
+  display: flex;
+  height: 70vh;
+  width: 60%;
+  background-color: white;
+}
+
+.left-container{
+  height: 100%;
+  width: 70%;
+  /* background-image: url('../../assets/images//pageonelogin.png'); */
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.right-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, rgb(220, 227, 255), rgb(193, 193, 251));
+  background-image: linear-gradient(to right,#a4b5fc, #708cff);
+}
+.left-sub-container{
+  height: 50%;
+  width: 100%;
+  background-image: url('../../assets/images//pageonelogin.png'); 
+  background-size: cover;
+}
+
+.image-style{
+  height: 100%;
+  width: 100%;
+}
+
+.bilvantis-logo-container{
+  background-image: url('../../assets/images/Group\ 9543@2x.png');
+  background-size: cover;
+}
+
+
+
