@@ -1,40 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TableData from '../Table/Table';
+import { fetchBatch } from '../../actions/batchesActions';
+import { useSelector, useDispatch } from "react-redux";
+import Pagination from "../Pagination/Pagination";
 
 const columns = [
-  { Header: 'Name', accessor: 'name', sortable: true },
-  { Header: 'Age', accessor: 'age', sortable: false },
-  { Header: 'Address', accessor: 'address', sortable: true },
-  
+  { Header: "S.No", accessor: "sno", sortable: true },
+  { Header: 'Batch Name', accessor: 'BatchName', sortable: true },
+  { Header: 'user Name', accessor: 'userName', sortable: false },
 ];
 
-const initialData = [
-    { name: 'John Doe', age: 28, address: '123 Main St' },
-    { name: 'Jane Smith', age: 34, address: '456 Oak Ave' },
-    { name: 'Alice Johnson', age: 22, address: '789 Pine Rd' },
-    { name: 'Bob Brown', age: 45, address: '101 Maple St' },
-    { name: 'Charlie Davis', age: 30, address: '202 Birch Ln' },
-    { name: 'Diana Evans', age: 29, address: '303 Cedar Ave' },
-    { name: 'Edward Green', age: 50, address: '404 Spruce Dr' },
-    { name: 'Fiona Harris', age: 27, address: '505 Walnut St' },
-    { name: 'George Ivy', age: 33, address: '606 Chestnut Rd' },
-    { name: 'Helen King', age: 26, address: '707 Elm St' },
-    { name: 'Ian Lewis', age: 40, address: '808 Ash Ln' },
-    { name: 'Julia Moore', age: 31, address: '909 Poplar Dr' },
-    { name: 'Kevin Nelson', age: 23, address: '1010 Fir St' },
-    { name: 'Laura Olson', age: 36, address: '1111 Hemlock Rd' },
-    { name: 'Michael Parker', age: 38, address: '1212 Redwood Ave' },
-    { name: 'Nina Quinn', age: 24, address: '1313 Cypress St' },
-    { name: 'Oscar Roberts', age: 44, address: '1414 Sequoia Dr' },
-    { name: 'Paula Scott', age: 32, address: '1515 Magnolia Ln' },
-    { name: 'Quincy Turner', age: 29, address: '1616 Willow Rd' },
-    { name: 'Rachel Underwood', age: 41, address: '1717 Aspen St' },
-  ];
-  
-
 const Batches = () => {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+  const dataState = useSelector((state) => state.batchdata);
+  const totalItems = useSelector((state) => state.batchdata.batches.totalItems);
+  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchBatch(currentPage, searchValue));
+  }, [dispatch, currentPage, searchValue]);
+
+  useEffect(() => {
+    if (dataState.batches && dataState.batches.Batches && dataState.batches.Batches.length > 0) {
+      const newData = dataState.batches.Batches.map((row, index) => ({
+        sno: index + 1,
+        BatchName: row.batch_name,
+        userName: Array.isArray(row.user_name) ? row.user_name.join(', ') : '',
+      }));
+      setData(newData);
+    }
+  }, [dataState.batches]);
 
   const handleSort = (key, direction) => {
     const sortedData = [...data].sort((a, b) => {
@@ -45,14 +42,12 @@ const Batches = () => {
     setData(sortedData);
   };
 
-  const handleSearch = (value) => {
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearchChange = (value) => {
     setSearchValue(value);
-    const filteredData = initialData.filter((item) =>
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(value.toLowerCase())
-      )
-    );
-    setData(filteredData);
   };
 
   return (
@@ -61,8 +56,14 @@ const Batches = () => {
         columns={columns}
         data={data}
         onSort={handleSort}
-        onSearch={handleSearch}
+        onSearch={handleSearchChange}
         searchValue={searchValue}
+      />
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+        totalItems={totalItems}
+        itemsPerPage={10}
       />
     </div>
   );
