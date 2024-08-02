@@ -23,7 +23,7 @@ export const fetchBatchFailure = (error) => ({
   payload: error,
 });
 
-export const fetchBatch = (page = 1,search = '') => {
+export const fetchBatch = (page ,search = '') => {
   return (dispatch) => {
     dispatch(fetchBatchRequest());
     axios
@@ -38,7 +38,6 @@ export const fetchBatch = (page = 1,search = '') => {
   };
 };
 
-// Action Creators
 export const addBatchRequest = () => ({
   type: ADD_BATCH_REQUEST,
 });
@@ -53,7 +52,6 @@ export const addBatchFailure = (error) => ({
   payload: error,
 });
 
-// Thunk for adding a batch
 export const addBatch = (batchData) => {
   return (dispatch) => {
     dispatch(addBatchRequest());

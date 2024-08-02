@@ -3,13 +3,13 @@ import TableData from '../Table/Table';
 import { fetchBatch } from '../../actions/batchesActions';
 import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../Pagination/Pagination";
-
+ 
 const columns = [
   { Header: "S.No", accessor: "sno", sortable: true },
   { Header: 'Batch Name', accessor: 'BatchName', sortable: true },
   { Header: 'user Name', accessor: 'users', sortable: false },
 ];
-
+ 
 const Batches = () => {
   const [data, setData] = useState([]);
   const [searchValue, setSearchValue] = useState('');
@@ -17,11 +17,11 @@ const Batches = () => {
   const totalItems = useSelector((state) => state.batchdata.batches.totalItems);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
-
+ 
   useEffect(() => {
     dispatch(fetchBatch(currentPage, searchValue));
   }, [dispatch, currentPage, searchValue]);
-
+ 
   useEffect(() => {
     if (dataState.batches && dataState.batches.Batches && dataState.batches.Batches.length > 0) {
       const newData = dataState.batches.Batches.map((row, index) => {
@@ -72,11 +72,11 @@ const Batches = () => {
     });
     setData(sortedData);
   };
-
+ 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
+ 
   const handleSearchChange = (value) => {
     setSearchValue(value);
   };
@@ -104,5 +104,5 @@ const Batches = () => {
     </div>
   );
 };
-
+ 
 export default Batches;
