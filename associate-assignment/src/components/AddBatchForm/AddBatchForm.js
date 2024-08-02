@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Select, { components } from "react-select";
 import "./AddBatchForm.css";
-import { addBatch } from "../../actions/batchesActions";
+import { addBatch, fetchBatch } from "../../actions/batchesActions";
 import { fetchData } from "../../actions/apiactions";
-import { fetchTraining } from "../../actions/trainingActions";
 import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { ADD_BATCH_ERROR_MESSAGES } from "../../constants/errorMessages";
+import { ALERT_TEXT } from "../../constants/uiTextSamples";
+import OffcanvasComponent from '../FormModal/FormModal';
 
-// Custom Option component to include checkboxes
 const Option = (props) => {
-  const dataState = useSelector((state) => state.addedBatch);
   return (
     <components.Option {...props}>
       <div className="custom-option">
@@ -25,7 +24,6 @@ const Option = (props) => {
   );
 };
 
-// Custom MultiValue component to include the select all functionality
 const MultiValue = (props) => {
   if (props.index === 0 && props.data.value === "selectAll") {
     return (
@@ -37,12 +35,15 @@ const MultiValue = (props) => {
   return <components.MultiValue {...props} />;
 };
 
-const AddBatchForm = () => {
+const AddBatchForm = ({ handleCloseOffcanvas }) => {
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [offcanvasProps, setOffcanvasProps] = useState({ activeTab: 'tab1' });
+  const dataState = useSelector((state) => state.addbatchdata);
   const [formData, setFormData] = useState({
     batch_name: "",
-    username: [], // Change to an array for multi-select
+    users: [],
   });
-  const [trainingOptions, setTrainingOptions] = useState([]);
+
   const dispatch = useDispatch();
   const users = useSelector((state) => state.userdata);
   const loading = useSelector((state) => state.userdata.loading);
@@ -50,7 +51,6 @@ const AddBatchForm = () => {
 
   useEffect(() => {
     dispatch(fetchData());
-    dispatch(fetchTraining());
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -77,22 +77,22 @@ const AddBatchForm = () => {
   const handleSelectChange = (selectedOptions) => {
     if (selectedOptions.some((option) => option.value === "selectAll")) {
       const allSelected =
-        formData.username.length === users.users.allUsers.length;
+        formData.users.length === users.users.allUsers.length;
       setFormData({
         ...formData,
-        username: allSelected
+        users: allSelected
           ? []
           : users.users.allUsers.map((user) => user.username),
       });
 
       setErrors((prevErrors) => ({
         ...prevErrors,
-        username: allSelected ? "At least one User Name is required" : "",
+        users: allSelected ? "At least one User Name is required" : "",
       }));
     } else {
       setFormData({
         ...formData,
-        username: selectedOptions
+        users: selectedOptions
           ? selectedOptions.map((option) => option.value)
           : [],
       });
@@ -100,7 +100,7 @@ const AddBatchForm = () => {
       if (!selectedOptions || selectedOptions.length === 0) {
         setErrors((prevErrors) => ({
           ...prevErrors,
-          username: "At least one User Name is required",
+          username: "At least one User is required",
         }));
       } else {
         setErrors((prevErrors) => {
@@ -115,40 +115,51 @@ const AddBatchForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
-
     if (formData.batch_name.length === 0) {
       newErrors.batch_name = ADD_BATCH_ERROR_MESSAGES.BATCH_NAME_REQUIRED;
     }
-    if (formData.username.length === 0) {
-      newErrors.username = ADD_BATCH_ERROR_MESSAGES.USER_REQUIRED;
+    if (formData.users.length === 0) {
+      newErrors.users = ADD_BATCH_ERROR_MESSAGES.USER_REQUIRED;
     }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
       dispatch(addBatch(formData))
         .then((response) => {
-          // You can handle additional success logic here if needed
+          if (response.status === 200) {
+            Swal.fire({
+              title: ALERT_TEXT.SUCCESS,
+              text: response.data.message,
+              icon: "success",
+              confirmButtonText: ALERT_TEXT.OK,
+            }).then(() => {
+              dispatch(fetchBatch());
+              setFormData({ batch_name: "", users: [] });
+              setErrors({});
+              setOffcanvasProps({ activeTab: "tab1" });
+              setShowOffcanvas(false);
+              handleCloseOffcanvas();
+            });
+          } else {
+            Swal.fire({
+              title: ALERT_TEXT.ERROR,
+              text: response.data.message,
+              icon: "error",
+              confirmButtonText: ALERT_TEXT.OK,
+            });
+          }
         })
         .catch((error) => {
-          console.error("Failed to add batch:", error);
-          // You can handle additional error logic here if needed
+          Swal.fire({
+            title: ALERT_TEXT.ERROR,
+            text: error.response?.data?.message || error.message,
+            icon: "error",
+            confirmButtonText: ALERT_TEXT.OK,
+          });
         });
-
-      // Show SweetAlert on successful form submission
-      if (addBatch.statusCode === 200) {
-        Swal.fire({
-          title: "Success!",
-          text: addBatch.response.message,
-          icon: "success",
-          confirmButtonText: "OK",
-        });
-      }
-
-      // Reset form and errors
-      setFormData({ batch_name: "", username: [] });
-      setErrors({});
     }
   };
+
   const userOptions = Array.isArray(users.users.allUsers)
     ? users.users.allUsers.map((user) => ({
         value: user.username,
@@ -162,57 +173,62 @@ const AddBatchForm = () => {
   };
 
   return (
-    <form className="form-styles" onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="batch_name">
-          Batch Name <strong className="error-color">*</strong>
-        </label>
-        <input
-          type="text"
-          id="batch_name"
-          name="batch_name"
-          value={formData.batch_name}
-          onChange={handleChange}
-        />
-        {errors.batch_name && (
-          <span className="error error-color">{errors.batch_name}</span>
-        )}
-      </div>
-      <div>
-        <label htmlFor="username">
-          User Names <strong className="error-color">*</strong>
-        </label>
-
-        <Select
-          id="username"
-          name="username"
-          value={userOptions.filter((option) =>
-            formData.username.includes(option.value)
+    <div>
+      <form className="form-styles" onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="batch_name">
+            Batch Name <strong className="error-color">*</strong>
+          </label>
+          <input
+            type="text"
+            id="batch_name"
+            placeholder="Enter batch name"
+            name="batch_name"
+            value={formData.batch_name}
+            onChange={handleChange}
+          />
+          {errors.batch_name && (
+            <span className="error error-color">{errors.batch_name}</span>
           )}
-          onChange={handleSelectChange}
-          options={[selectAllOption, ...userOptions]}
-          isMulti
-          closeMenuOnSelect={false}
-          hideSelectedOptions={false}
-          components={{ Option, MultiValue }}
-          styles={{
-            option: (provided) => ({
-              ...provided,
-              display: "flex",
-              justifyContent:'space-between'
-            }),
-          }}
-        />
-        {errors.username && (
-          <span className="error error-color">{errors.username}</span>
-        )}
-      </div>
+        </div>
+        <div>
+          <label htmlFor="users">
+            Users <strong className="error-color">*</strong>
+          </label>
+          <Select
+            id="users"
+            name="users"
+            placeholder="Select users"
+            value={userOptions.filter((option) =>
+              formData.users.includes(option.value)
+            )}
+            onChange={handleSelectChange}
+            options={[selectAllOption, ...userOptions]}
+            isMulti
+            closeMenuOnSelect={false}
+            hideSelectedOptions={false}
+            components={{ Option, MultiValue }}
+            styles={{
+              option: (provided) => ({
+                ...provided,
+                display: "flex",
+                justifyContent: "space-between",
+              }),
+            }}
+          />
+          {errors.username && (
+            <span className="error error-color">{errors.users}</span>
+          )}
+        </div>
 
-      <button className="button-styles" type="submit" disabled={loading}>
-        Submit
-      </button>
-    </form>
+        <button className="button-styles" type="submit" disabled={loading}>
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
 
 export default AddBatchForm;
+
+

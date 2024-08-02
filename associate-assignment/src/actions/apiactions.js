@@ -19,10 +19,10 @@ export const fetchDataFailure = (error) => ({
   payload: error,
 });
 
-export const fetchData = (page) => {
+export const fetchData = (page,search = '') => {
   return (dispatch) => {
     dispatch(fetchDataRequest());
-    const url = page ? `${API_URLS.user.FETCH_USER}?page=${page}`: `${API_URLS.user.FETCH_USER}`;
+    const url = page ? `${API_URLS.user.FETCH_USER}?page=${page} &search=${search}`: `${API_URLS.user.FETCH_USER}`;
     axios
       .get(url)
       .then((response) => {

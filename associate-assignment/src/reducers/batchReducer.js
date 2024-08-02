@@ -39,13 +39,15 @@ import {
           ...state,
           loading: true,
         };
-      case ADD_BATCH_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          batches: [...state.batches, action.payload],
-          error: "",
-        };
+        case ADD_BATCH_SUCCESS:
+          console.log("ADD_BATCH_SUCCESS payload:", action.payload);
+          return {
+            ...state,
+            loading: false,
+            batches: [], 
+            error: action.payload,
+          };
+          
       case ADD_BATCH_FAILURE:
         return {
           ...state,

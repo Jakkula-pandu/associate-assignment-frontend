@@ -57,21 +57,26 @@ export const addBatchFailure = (error) => ({
 export const addBatch = (batchData) => {
   return (dispatch) => {
     dispatch(addBatchRequest());
-    axios
-    .post(`${API_URLS.BATCH.ADD_BATCH}`, batchData, {
-      headers: {
-        'role_id': 2,
-      },
-    })
+    return axios
+      .post(`${API_URLS.BATCH.ADD_BATCH}`, batchData, {
+        headers: {
+          'role_id': 2,
+        },
+      })
       .then((response) => {
-        const addedBatch = response;
-        dispatch(addBatchSuccess(response));
+        const addedBatch = response.data; 
+        console.log("addedBatch",addedBatch);
+        dispatch(addBatchSuccess(addedBatch));
+        return response; 
       })
       .catch((error) => {
         dispatch(addBatchFailure(error.message));
+        throw error;
       });
   };
 };
+
+
 
 
 

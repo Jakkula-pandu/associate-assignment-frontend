@@ -31,3 +31,10 @@ export const FOOTER={
     LINKEDIN_LINK:"https://www.linkedin.com",
     TWITTER_LINK:"https://www.twitter.com"
 }
+
+export const ALERT_TEXT ={
+    SUCCESS :"Success!",
+    OK :"OK",
+    ERROR :"Error!"
+    
+}

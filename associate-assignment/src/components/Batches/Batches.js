@@ -7,7 +7,7 @@ import Pagination from "../Pagination/Pagination";
 const columns = [
   { Header: "S.No", accessor: "sno", sortable: true },
   { Header: 'Batch Name', accessor: 'BatchName', sortable: true },
-  { Header: 'user Name', accessor: 'userName', sortable: false },
+  { Header: 'user Name', accessor: 'users', sortable: false },
 ];
 
 const Batches = () => {
@@ -24,14 +24,45 @@ const Batches = () => {
 
   useEffect(() => {
     if (dataState.batches && dataState.batches.Batches && dataState.batches.Batches.length > 0) {
-      const newData = dataState.batches.Batches.map((row, index) => ({
-        sno: index + 1,
-        BatchName: row.batch_name,
-        userName: Array.isArray(row.user_name) ? row.user_name.join(', ') : '',
-      }));
+      const newData = dataState.batches.Batches.map((row, index) => {
+        const users = Array.isArray(row.users) ? row.users : [];
+        return {
+          sno: index + 1,
+          BatchName: row.batch_name,
+          users,
+          showFullList: false, // Initialize showFullList
+        };
+      });
       setData(newData);
     }
   }, [dataState.batches]);
+
+  const handleToggle = (index) => {
+    setData((prevData) => {
+      const newData = [...prevData];
+      newData[index].showFullList = true; // Set showFullList to true
+      return newData;
+    });
+  };
+
+  const renderUsers = (users, showFullList, index) => {
+    if (users.length <= 6 || showFullList) {
+      return users.join(', ');
+    }
+    const truncatedUsers = users.slice(0, 6).join(', ') + ', ';
+    return (
+      <>
+        {truncatedUsers}
+        <span
+          className="ellipsis"
+          onClick={() => handleToggle(index)}
+          style={{ color: 'blue', cursor: 'pointer' }}
+        >
+          ...more
+        </span>
+      </>
+    );
+  };
 
   const handleSort = (key, direction) => {
     const sortedData = [...data].sort((a, b) => {
@@ -50,11 +81,16 @@ const Batches = () => {
     setSearchValue(value);
   };
 
+  const displayData = data.map((row, index) => ({
+    ...row,
+    users: renderUsers(row.users, row.showFullList, index),
+  }));
+
   return (
     <div>
       <TableData
         columns={columns}
-        data={data}
+        data={displayData}
         onSort={handleSort}
         onSearch={handleSearchChange}
         searchValue={searchValue}
