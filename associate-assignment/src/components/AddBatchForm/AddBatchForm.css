@@ -6,8 +6,6 @@
     margin: 0 auto;
   }
   
- 
-  
   label {
     margin-bottom: 5px;
   }
@@ -20,14 +18,13 @@
     box-sizing: border-box;
   }
   
- 
-  
   .headerstyles{
      font-weight: bold;
   }
   .error-color{
-color: red;
+     color: red;
   }
+  
   .button-styles{
     position: absolute;
     left: 0;

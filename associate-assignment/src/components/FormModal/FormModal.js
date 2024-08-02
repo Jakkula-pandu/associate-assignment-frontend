@@ -2,6 +2,7 @@ import React from "react";
 import { Offcanvas } from "react-bootstrap";
 import "./FormModal.css";
 import AddBatchForm, { handleSubmit } from "../AddBatchForm/AddBatchForm";
+import AddAssessmentForm from "../AddAssessmentForm/AddAssessmentForm";
 
 const OffcanvasComponent = ({ show, handleClose, activeTab }) => {
   return (
@@ -15,8 +16,8 @@ const OffcanvasComponent = ({ show, handleClose, activeTab }) => {
         {activeTab === "tab1" && <Offcanvas.Title className="form-title">Add batch</Offcanvas.Title>}
       </Offcanvas.Header>
       <Offcanvas.Body className="mb-5">
-        {activeTab === "tab1" && <AddBatchForm   />}
-        {activeTab === "tab2" && <h1>form2</h1>}
+        {activeTab === "tab1" && <AddBatchForm />}
+        {activeTab === "tab2" && <AddAssessmentForm/>}
         {activeTab === "tab3" && <h1>form3</h1>}
         {activeTab === "tab4" && <h1>form4</h1>}
       </Offcanvas.Body>

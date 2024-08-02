@@ -126,13 +126,13 @@ const AddBatchForm = () => {
       setErrors(newErrors);
     } else {
       dispatch(addBatch(formData))
-        .then((response) => {
-          // You can handle additional success logic here if needed
-        })
-        .catch((error) => {
-          console.error("Failed to add batch:", error);
-          // You can handle additional error logic here if needed
-        });
+        // .then((response) => {
+        //   // You can handle additional success logic here if needed
+        // })
+        // .catch((error) => {
+        //   console.error("Failed to add batch:", error);
+        //   // You can handle additional error logic here if needed
+        // });
 
       // Show SweetAlert on successful form submission
       if (addBatch.statusCode === 200) {

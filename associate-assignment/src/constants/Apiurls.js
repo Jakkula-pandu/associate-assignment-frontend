@@ -12,5 +12,10 @@ export const API_URLS = {
 
     TRAINING: {
         FETCH_TRAINING : 'http://localhost:1090/v0.1/batches/fetch-trainings'
+    },
+
+    ASSESSMENT : {
+        FETCH_ASSESSMENT : 'http://localhost:1090/v0.1/assessment/fetch-assessment',
+        ADD_ASSESSMENT : 'http://localhost:1090/v0.1/assessment/add-assessment'
     }
 }

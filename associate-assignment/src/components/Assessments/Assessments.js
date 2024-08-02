@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TableData from '../Table/Table';
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAssessment } from '../../actions/assessmentActions';
+import Pagination from '../Pagination/Pagination';
 
 const CheckButton = ({ row }) => {
   const handleClick = () => {
@@ -9,56 +12,82 @@ const CheckButton = ({ row }) => {
 };
 
 const columns = [
-  { Header: 'S.No', accessor: 'sno', sortable: true },
+  { Header: 'S.No', accessor: 'sno' },
   { Header: 'Assessment Name', accessor: 'assessmentName', sortable: true },
   { Header: 'Batch Name', accessor: 'batchName', sortable: true },
-  { Header: 'Attempted Count', accessor: 'attemptedCount', sortable: true },
-  { Header: 'Unattempted Count', accessor: 'unattemptedCount', sortable: true },
-  { Header: 'Check Button', accessor: 'checkButton', sortable: false },
+  {Header:'Created Date', accessor:'createdDate', sortable:true}
 ];
 
-const initialData = [
-  { sno: 1, assessmentName: 'Math Quiz', batchName: 'Batch A', attemptedCount: 25, unattemptedCount: 5 },
-  { sno: 2, assessmentName: 'Science Test', batchName: 'Batch B', attemptedCount: 18, unattemptedCount: 12 },
-  { sno: 3, assessmentName: 'History Exam', batchName: 'Batch C', attemptedCount: 20, unattemptedCount: 10 },
-  { sno: 4, assessmentName: 'Geography Quiz', batchName: 'Batch D', attemptedCount: 22, unattemptedCount: 8 },
-  { sno: 5, assessmentName: 'English Test', batchName: 'Batch E', attemptedCount: 30, unattemptedCount: 0 },
-].map((row, index) => ({ ...row, checkButton: <CheckButton row={row} key={index} /> }));
 
-const Batches = () => {
-  const [data, setData] = useState(initialData);
+const Assessments = () => {
+  const [assessmentData, setAssessmentData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalItems = useSelector((state) => state.assessmentData.assessments.totalItems);
   const [searchValue, setSearchValue] = useState('');
+  const dataState = useSelector((state) => state.assessmentData);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAssessment(currentPage, searchValue));
+  }, [dispatch, currentPage, searchValue]);
+
+  useEffect(() => {
+    if (dataState.assessments && dataState.assessments.Assessments && dataState.assessments.Assessments.length > 0) {
+      const newData = dataState.assessments.Assessments.map((row, index) => ({
+        sno: index + 1,
+        assessmentName: row.assessment_name,
+        batchName: row.role.batch_name,
+        createdDate : row.created_date, 
+      }));
+      setAssessmentData(newData);
+    }
+  }, [dataState, dataState.assessments,currentPage, searchValue]);
 
   const handleSort = (key, direction) => {
-    const sortedData = [...data].sort((a, b) => {
+    const sortedData = [...assessmentData].sort((a, b) => {
       if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
       if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
       return 0;
     });
-    setData(sortedData);
+    setAssessmentData(sortedData);
   };
 
-  const handleSearch = (value) => {
+  // const handleSearch = (value) => {
+  //   setSearchValue(value);
+  //   const filteredData = assessmentData.filter((item) =>
+  //     Object.values(item).some((val) =>
+  //       String(val).toLowerCase().includes(value.toLowerCase())
+  //     )
+  //   );
+  //   setAssessmentData(filteredData);
+  // };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearchChange = (value) => {
     setSearchValue(value);
-    const filteredData = initialData.filter((item) =>
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(value.toLowerCase())
-      )
-    );
-    setData(filteredData);
   };
 
   return (
     <div>
       <TableData
         columns={columns}
-        data={data}
+        data={assessmentData}
         onSort={handleSort}
-        onSearch={handleSearch}
-        searchValue={searchValue}
+      onSearch={handleSearchChange}
+      searchValue={searchValue}
+      />
+
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+        totalItems={totalItems}
+        itemsPerPage={10}
       />
     </div>
   );
 };
 
-export default Batches;
+export default Assessments;

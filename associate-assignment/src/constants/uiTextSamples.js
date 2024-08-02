@@ -30,4 +30,9 @@ export const FOOTER={
     INSTAGRAM_LINK:"https://www.instagram.com/yourprofile",
     LINKEDIN_LINK:"https://www.linkedin.com",
     TWITTER_LINK:"https://www.twitter.com"
+};
+
+export const ADD_ASSESSMENT_LABELS = {
+   ASSESSMENT_NAME : 'Assessment Name' ,
+   BATCH_NAME : 'Batch name',
 }
