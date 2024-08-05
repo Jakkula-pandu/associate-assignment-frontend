@@ -6,7 +6,6 @@ import Pagination from "../Pagination/Pagination";
 
 const CheckButton = ({ row }) => {
   const handleClick = () => {
-    console.log("Button clicked for:", row);
   };
   return <button onClick={handleClick}>Check</button>;
 };
@@ -29,8 +28,8 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchData(currentPage));
-  }, [dispatch, currentPage]);
+    dispatch(fetchData(currentPage,searchValue));
+  }, [dispatch, currentPage,searchValue]);
 
   useEffect(() => {
     if (dataState.users && dataState.users.allUsers && dataState.users.allUsers.length > 0) {
