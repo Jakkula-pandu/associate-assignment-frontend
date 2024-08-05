@@ -73,7 +73,7 @@ const Users = () => {
   };
 
   return (
-    <div>
+    <div className="table-pagination-container">
       <TableData
         columns={columns}
         data={localData}

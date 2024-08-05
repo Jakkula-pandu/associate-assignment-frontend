@@ -62,7 +62,7 @@ function LoginPage() {
 
                 </div>
                 <div className='right-container'>
-                <div class="swinging-word">
+                <div className="swinging-word">
     </div>
                 <div className="login-page5-inner shadow-lg">
                 <form onSubmit={handleSubmit}>

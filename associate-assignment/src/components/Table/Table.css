@@ -17,7 +17,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    background-color:#5395D2;
+    background-color: #5395D2;
     color: white;
 }
 
@@ -48,4 +48,3 @@ th {
     max-height: 100%;
     height: auto;
 }
-

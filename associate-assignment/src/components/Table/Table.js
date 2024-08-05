@@ -64,8 +64,8 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
                                             style={{ cursor: 'pointer', marginLeft: '10px' }}
                                         >
                                             {sortConfig && sortConfig.key === column.accessor ? (
-                                                sortConfig.direction === 'ascending' ? <i class="bi bi-arrow-up"></i> : <i class="bi bi-arrow-down"></i>
-                                            ) : <i class="bi bi-arrows-vertical"></i>}
+                                                sortConfig.direction === 'ascending' ? <i className="bi bi-arrow-up"></i> : <i className="bi bi-arrow-down"></i>
+                                            ) : <i className="bi bi-arrows-vertical"></i>}
                                         </span>
                                     )}
                                 </Th>
