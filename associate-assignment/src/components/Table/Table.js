@@ -38,40 +38,42 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
         </div>
       </div>
 
-      <div className="table-responsive tableFixHead table-style">
-        <Table className="table table-hover table-container">
-          <Thead className="table-heading">
-            <Tr>
-              {columns.map((column) => (
-                <Th key={column.accessor}>
-                  {column.Header}
-                  {column.sortable && (
-                    <span
-                      onClick={() => handleSort(column.accessor)}
-                      style={{ cursor: 'pointer', marginLeft: '10px' }}
-                    >
-                      {sortConfig && sortConfig.key === column.accessor ? (
-                        sortConfig.direction === 'ascending' ? <i className="bi bi-arrow-up"></i> : <i className="bi bi-arrow-down"></i>
-                      ) : <i className="bi bi-arrows-vertical"></i>}
-                    </span>
-                  )}
-                </Th>
-              ))}
-            </Tr>
-          </Thead>
-          <Tbody>
-            {data.map((row, rowIndex) => (
-              <Tr key={rowIndex}>
-                {columns.map((column) => (
-                  <Td key={column.accessor}>{row[column.accessor]}</Td>
-                ))}
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </div>
-    </div>
-  );
+            <div className="table-responsive tableFixHead table-style">
+                <Table className="table table-hover table-container">
+                    <Thead className="table-heading">
+                        <Tr>
+                            {columns.map((column) => (
+                                <Th key={column.accessor}>
+                                    {column.Header}
+                                    {column.sortable && (
+                                        <span
+                                            onClick={() => handleSort(column.accessor)}
+                                            style={{ cursor: 'pointer', marginLeft: '10px' }}
+                                        >
+                                            {sortConfig && sortConfig.key === column.accessor ? (
+                                                sortConfig.direction === 'ascending' ? <i className="bi bi-arrow-up"></i> : <i className="bi bi-arrow-down"></i>
+                                            ) : <i className="bi bi-arrows-vertical"></i>}
+                                        </span>
+                                    )}
+                                </Th>
+                            ))}
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {data.map((row, rowIndex) => (
+                            <Tr key={rowIndex}>
+                                {columns.map((column) => (
+                                    <Td key={column.accessor}>{row[column.accessor]}</Td>
+                                ))}
+                            </Tr>
+                        ))}
+                    </Tbody>
+                </Table>
+
+            </div>
+        </div>
+
+    );
 };
 
 export default TableData;

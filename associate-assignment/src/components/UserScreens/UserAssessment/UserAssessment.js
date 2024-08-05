@@ -1,5 +1,6 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useNavigate } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -8,6 +9,10 @@ import './UserAssessment.css';
 import { Pagination, Navigation, Autoplay } from 'swiper/modules';
 
 const UserAssessment = ({ selectedBatch }) => {
+    const navigate = useNavigate();
+    const handleTest = () => {
+        navigate('/test');
+    };
     if (!selectedBatch) return <div className='user-swiper'>Select a batch to see assessments.</div>;
 
     return (
@@ -27,7 +32,7 @@ const UserAssessment = ({ selectedBatch }) => {
                         <div className="slide-content">
                             <h3>{assessment.name}</h3>
                             <div className='result-attempt-buttons'>
-                                <button className='btn btn-primary attempt-button'>Attempt Test</button>
+                                <button className='btn btn-primary attempt-button' onClick={handleTest}>Attempt Test</button>
                                 <button className='btn btn-success view-result-button'>View Result</button>
                             </div>
                         </div>

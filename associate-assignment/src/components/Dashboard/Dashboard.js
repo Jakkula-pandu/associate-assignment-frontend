@@ -6,7 +6,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import Batches from '../Batches/Batches';
 import Assessments from '../Assessments/Assessments';
-import QuestionFormApp from '../../Questions/Questions';
+import QuestionsForm from '../Questions/Questions';
 import Users from '../Users/Users';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -25,21 +25,23 @@ const Dashboard = () => {
   return (
     <div className='dashboard-container' >
       <TabContext value={selectedTab}>
-        <Box >
+        <Box className="tabs-container">
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Batches" value="Batches" />
             <Tab label="Assessment" value="Assessment" />
             <Tab label="Users" value="Users" />
-            <Tab label="Questions" value="Questions"/>
+            <Tab label="Questions" value="Questions" />
           </TabList>
         </Box>
-        <TabPanel value="Batches"><Batches/></TabPanel>
-        <TabPanel value="Assessment"><Assessments/></TabPanel>
-        <TabPanel value="Users"><Users/></TabPanel>
-        <TabPanel value="Questions"><QuestionFormApp/></TabPanel>
+        <Box className="tab-content-container">
+          <TabPanel value="Batches"><Batches /></TabPanel>
+          <TabPanel value="Assessment"><Assessments /></TabPanel>
+          <TabPanel value="Users"><Users /></TabPanel>
+          <TabPanel value="Questions"><QuestionsForm /></TabPanel>
+        </Box>
       </TabContext>
     </div>
   );
 }
 
-export default Dashboard ;
+export default Dashboard;
