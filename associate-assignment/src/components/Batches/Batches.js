@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import TableData from '../Table/Table';
 import { fetchBatch } from '../../actions/batchesActions';
@@ -7,7 +8,7 @@ import Pagination from "../Pagination/Pagination";
 const columns = [
   { Header: "S.No", accessor: "sno", sortable: true },
   { Header: 'Batch Name', accessor: 'BatchName', sortable: true },
-  { Header: 'user Name', accessor: 'users', sortable: false },
+  { Header: 'User Name', accessor: 'userNames', sortable: false },
 ];
  
 const Batches = () => {
@@ -25,11 +26,13 @@ const Batches = () => {
   useEffect(() => {
     if (dataState.batches && dataState.batches.Batches && dataState.batches.Batches.length > 0) {
       const newData = dataState.batches.Batches.map((row, index) => {
-        const users = Array.isArray(row.users) ? row.users : [];
+        const users = row.users ? row.users : [];
+        const usernames = users.map(user => user.username);
+
         return {
           sno: index + 1,
           BatchName: row.batch_name,
-          users,
+          usernames,
           showFullList: false, // Initialize showFullList
         };
       });
@@ -45,11 +48,12 @@ const Batches = () => {
     });
   };
 
-  const renderUsers = (users, showFullList, index) => {
-    if (users.length <= 6 || showFullList) {
-      return users.join(', ');
+  const renderUsers = (usernames, showFullList, index) => {
+    if (usernames.length <= 6 || showFullList) {
+      return usernames.join(', ');
     }
-    const truncatedUsers = users.slice(0, 6).join(', ') + ', ';
+    // If not showing full list, display first 6 usernames followed by "more..."
+    const truncatedUsers = usernames.slice(0, 6).join(', ') + ', ';
     return (
       <>
         {truncatedUsers}
@@ -83,9 +87,8 @@ const Batches = () => {
 
   const displayData = data.map((row, index) => ({
     ...row,
-    users: renderUsers(row.users, row.showFullList, index),
+    userNames: renderUsers(row.usernames, row.showFullList, index),
   }));
-
   return (
     <div>
       <TableData

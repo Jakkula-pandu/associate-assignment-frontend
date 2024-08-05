@@ -21,7 +21,6 @@ import {
           loading: true,
         };
       case FETCH_ASSESSMENT_SUCCESS:
-        console.log("checkingf data>>>", action);
         return {
           ...state,
           loading: false,

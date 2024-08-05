@@ -40,7 +40,6 @@ import {
           loading: true,
         };
         case ADD_BATCH_SUCCESS:
-          console.log("ADD_BATCH_SUCCESS payload:", action.payload);
           return {
             ...state,
             loading: false,

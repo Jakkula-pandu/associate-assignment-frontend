@@ -30,7 +30,6 @@ export const fetchAssessment = (page, search) => {
       .get(`${API_URLS.ASSESSMENT.FETCH_ASSESSMENT}?page=${page} &search=${search}`)
       .then((response) => {
         const assessmentData = response.data;
-        console.log("assessmentData>>>", assessmentData);
         dispatch(fetchAssessmentSuccess(assessmentData));
       })
       .catch((error) => {
@@ -66,8 +65,7 @@ export const addAssessment = (requestBody, batchName) => {
       },
     })
       .then((response) => {
-        console.log("response>>>?>>>>>???}}", response);
-        dispatch(addAssessmentSuccess(response));
+        dispatch(addAssessmentSuccess(response.data));
       })
       .catch((error) => {
         dispatch(addAssessmentFailure(error.message));

@@ -1,147 +1,179 @@
 import React, { useState, useCallback, useEffect } from "react";
 import Select from "react-select";
 import { ADD_ASSESSMENT_LABELS } from "../../constants/uiTextSamples";
-import './AddAssessmentForm.css';
+import "./AddAssessmentForm.css";
 import { fetchBatch } from "../../actions/batchesActions";
 import { useSelector, useDispatch } from "react-redux";
 import { addAssessment } from "../../actions/assessmentActions";
+import { ADD_BATCH_ERROR_MESSAGES } from "../../constants/errorMessages";
+import { ALERT_TEXT } from "../../constants/uiTextSamples";
+import OffcanvasComponent from "../FormModal/FormModal";
+import Swal from "sweetalert2";
+import { fetchAssessment } from "../../actions/assessmentActions";
 
-const colourOptions = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' },
-];
+const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
+  const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
+  const [batchDetails, setBatchDetails] = useState();
+  const dataState = useSelector((state) => state.batchdata);
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const [offcanvasProps, setOffcanvasProps] = useState({ activeTab: "tab2" });
 
-const AddAssessmentForm = () => {
-    const dispatch = useDispatch();
-    const [currentPage, setCurrentPage] = useState(1);
-    const [searchValue, setSearchValue] = useState('');
-    const [batchDetails, setBatchDetails] = useState();
-    const dataState = useSelector((state) => state.batchdata);
-    
-    const [formData, setFormData] = useState({
-        batchName: '',
-        assessmentName: null,
-    });
-   
-    const [errors, setErrors] = useState({
-        batchName: '',
-        assessmentName: '',
-    });
+  const [formData, setFormData] = useState({
+    batchName: "",
+    assessmentName: null,
+  });
 
-    const onValidate = (value, name) => {
-        setErrors((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
+  const [errors, setErrors] = useState({
+    batchName: "",
+    assessmentName: "",
+  });
 
-    useEffect(() => {
-        dispatch(fetchBatch(currentPage, searchValue));
-      }, [dispatch, currentPage, searchValue]);
-    
-      useEffect(() => {
-        if (dataState.batches && dataState.batches.Batches && dataState.batches.Batches.length > 0) {
-            const newData = dataState.batches.Batches.map(batch => ({
-                value: batch.batch_id,
-                label: batch.batch_name,
-            }));
-            setBatchDetails(newData) ;
-        }
-      }, [dataState.batches]);
+  const onValidate = (value, name) => {
+    setErrors((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-    const onHandleChange = useCallback((value, name) => {
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-        onValidate('', name);
-    }, []);
+  useEffect(() => {
+    dispatch(fetchBatch(currentPage, searchValue));
+  }, [dispatch, currentPage, searchValue]);
 
-    const validateForm = () => {
-        let isInvalid = false;
-        let newErrors = {};
+  useEffect(() => {
+    if (
+      dataState.batches &&
+      dataState.batches.Batches &&
+      dataState.batches.Batches.length > 0
+    ) {
+      const newData = dataState.batches.Batches.map((batch) => ({
+        value: batch.batch_id,
+        label: batch.batch_name,
+      }));
+      setBatchDetails(newData);
+    }
+  }, [dataState.batches]);
 
-        if (!formData.batchName) {
-            newErrors.batchName = 'Batch name is required';
-            isInvalid = true;
-        }
+  const onHandleChange = useCallback((value, name) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    onValidate("", name);
+  }, []);
 
-        if (!formData.assessmentName) {
-            newErrors.assessmentName = 'Assessment name is required';
-            isInvalid = true;
-        }
+  const validateForm = () => {
+    let isInvalid = false;
+    let newErrors = {};
 
-        setErrors(newErrors);
-        return !isInvalid;
-    };
+    if (!formData.batchName) {
+      newErrors.batchName = "Batch name is required";
+      isInvalid = true;
+    }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const isValid = validateForm();
-        if (!isValid) {
-            console.error('Invalid Form!');
-            return false;
-        }else {
-            const { batchName, assessmentName } = formData;
+    if (!formData.assessmentName) {
+      newErrors.assessmentName = "Assessment name is required";
+      isInvalid = true;
+    }
+
+    setErrors(newErrors);
+    return !isInvalid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isValid = validateForm();
+    if (!isValid) {
+      console.error("Invalid Form!");
+      return false;
+    } else {
+        const { batchName, assessmentName } = formData;
            
-            const requestBody = {
-                assessment_name: assessmentName
-            };
-            dispatch(addAssessment(requestBody,batchName ))
-           
-        }
+        const requestBody = {
+            assessment_name: assessmentName
+        };
+        dispatch(addAssessment(requestBody,formData ))
+             .then((response) => {  
+          if (response.status === 200) {
+            Swal.fire({
+              title: ALERT_TEXT.SUCCESS,
+              text: response.data.message,
+              icon: "success",
+              confirmButtonText: ALERT_TEXT.OK,
+            }).then(() => {
+              dispatch(fetchAssessment());
+              setFormData({ batchName: "", assessmentName: "" });
+              setErrors({});
+              setOffcanvasProps({ activeTab: "tab2" });
+              setShowOffcanvas(false);
+              handleCloseOffcanvas();
+            });
+          } else {
+            Swal.fire({
+              title: ALERT_TEXT.ERROR,
+              text: response.data.message,
+              icon: "error",
+              confirmButtonText: ALERT_TEXT.OK,
+            });
+          }
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: ALERT_TEXT.ERROR,
+            text: error.response?.data?.message || error.message,
+            icon: "error",
+            confirmButtonText: ALERT_TEXT.OK,
+          });
+        });
+    }
+  };
 
-    };
-
-    return (
-        <form className="form-styles" onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="assessmentName">
-                    {ADD_ASSESSMENT_LABELS.ASSESSMENT_NAME} <strong className="error-color">*</strong>
-                </label>
-                <input
-                    type="text"
-                    id="assessmentName"
-                    name="assessmentName"
-                    className="form-control"
-                    value={formData.assessmentName}
-                    onChange={(e) => onHandleChange(e.target.value, 'assessmentName')}
-                />
-                {errors.assessmentName && (
-                    <span className="error error-color">{errors.assessmentName}</span>
-                )}
-            </div>
-            <br />
-            <div>
-                <label htmlFor="batchName">
-                    {ADD_ASSESSMENT_LABELS.BATCH_NAME} <strong className="error-color">*</strong>
-                </label>
-                <Select
-                    id="batchName"
-                    name="batchName"
-                    options={batchDetails}
-                    className="basic-single-select"
-                    classNamePrefix="select"
-                    value={formData.batchName}
-                    onChange={(selectedOption) => onHandleChange(selectedOption, 'batchName')}
-                />
-                {errors.batchName && (
-                    <span className="error error-color">{errors.batchName}</span>
-                )}
-            </div>
-            <button className="btn btn-primary button-styles" type="submit">
-                Submit
-            </button>
-        </form>
-    );
+  return (
+    <form className="form-styles" onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="assessmentName">
+          {ADD_ASSESSMENT_LABELS.ASSESSMENT_NAME}{" "}
+          <strong className="error-color">*</strong>
+        </label>
+        <input
+          type="text"
+          id="assessmentName"
+          name="assessmentName"
+          className="form-control"
+          value={formData.assessmentName}
+          onChange={(e) => onHandleChange(e.target.value, "assessmentName")}
+        />
+        {errors.assessmentName && (
+          <span className="error error-color">{errors.assessmentName}</span>
+        )}
+      </div>
+      <br />
+      <div>
+        <label htmlFor="batchName">
+          {ADD_ASSESSMENT_LABELS.BATCH_NAME}{" "}
+          <strong className="error-color">*</strong>
+        </label>
+        <Select
+          id="batchName"
+          name="batchName"
+          options={batchDetails}
+          className="basic-single-select"
+          classNamePrefix="select"
+          value={formData.batchName}
+          onChange={(selectedOption) =>
+            onHandleChange(selectedOption, "batchName")
+          }
+        />
+        {errors.batchName && (
+          <span className="error error-color">{errors.batchName}</span>
+        )}
+      </div>
+      <button className="btn btn-primary button-styles" type="submit">
+        Submit
+      </button>
+    </form>
+  );
 };
 
 export default AddAssessmentForm;

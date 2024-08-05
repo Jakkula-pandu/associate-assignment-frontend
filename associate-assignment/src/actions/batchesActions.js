@@ -63,7 +63,6 @@ export const addBatch = (batchData) => {
       })
       .then((response) => {
         const addedBatch = response.data; 
-        console.log("addedBatch",addedBatch);
         dispatch(addBatchSuccess(addedBatch));
         return response; 
       })

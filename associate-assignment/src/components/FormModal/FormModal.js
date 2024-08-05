@@ -17,7 +17,7 @@ const OffcanvasComponent = ({ show, handleClose, activeTab }) => {
       </Offcanvas.Header>
       <Offcanvas.Body className="mb-5">
       {activeTab === "tab1" && <AddBatchForm  handleCloseOffcanvas={handleClose} />}
-        {activeTab === "tab2" && <AddAssessmentForm/>}
+        {activeTab === "tab2" && <AddAssessmentForm handleCloseOffcanvas={handleClose}/>}
         {activeTab === "tab3" && <h1>form3</h1>}
         {activeTab === "tab4" && <h1>form4</h1>}
       </Offcanvas.Body>
