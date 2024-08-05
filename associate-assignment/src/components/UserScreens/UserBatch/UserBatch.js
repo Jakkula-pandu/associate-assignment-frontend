@@ -5,7 +5,7 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import './UserBatch.css';
 import 'swiper/css/effect-cube';
-import { EffectCube, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 const UserBatches = ({ onSelectBatch }) => {
     const batches = [
@@ -103,23 +103,21 @@ const UserBatches = ({ onSelectBatch }) => {
     return (
         <div>
             <Swiper
-             effect={'cube'}
+             effect={'coverflow'}
              grabCursor={true}
-             cubeEffect={{
-               shadow: true,
-               slideShadows: true,
-               shadowOffset: 20,
-               shadowScale: 0.94,
+             centeredSlides={true}
+             slidesPerView={'auto'}
+             initialSlide={1}
+             coverflowEffect={{
+                 rotate: 50,
+                 stretch: 0,
+                 depth: 100,
+                 modifier: 1,
+                 slideShadows: true,
              }}
              pagination={true}
-             modules={[EffectCube, Pagination]}
-
-                // centeredSlides={true}
-                // slidesPerView={'auto'}
-                // initialSlide={1}
-           
-              
-                className="mySwiper swiper-container"
+             modules={[EffectCoverflow, Pagination]}
+             className="mySwiper swiper-container"
             >
                 {batches.map((batch, index) => (
                     <SwiperSlide key={index} className='swiper-cards' onClick={() => handleBatchClick(batch)}>
