@@ -1,21 +1,27 @@
+const BASE_URL = 'http://localhost:1090/v0.1';
+
 export const API_URLS = {
     user: {
-        FETCH_USER: 'http://localhost:1090/v0.1/users/fetch-users',
-  
+        FETCH_USER: `${BASE_URL}/users/fetch-users`,
     },
     BATCH: {
-        FETCH_BATCH: 'http://localhost:1090/v0.1/batches/fetch-batches',
-        ADD_BATCH: 'http://localhost:1090/v0.1/batches/add-batch'
-        
-  
+        FETCH_BATCH: `${BASE_URL}/batches/fetch-batches`,
+        ADD_BATCH: `${BASE_URL}/batches/add-batch`,
     },
-
     TRAINING: {
-        FETCH_TRAINING : 'http://localhost:1090/v0.1/batches/fetch-trainings'
+        FETCH_TRAINING: `${BASE_URL}/batches/fetch-trainings`,
     },
-
-    ASSESSMENT : {
-        FETCH_ASSESSMENT : 'http://localhost:1090/v0.1/assessment/fetch-assessment',
-        ADD_ASSESSMENT : 'http://localhost:1090/v0.1/assessment/add-assessment'
+    ASSESSMENT: {
+        FETCH_ASSESSMENT: `${BASE_URL}/assessment/fetch-assessment`,
+        ADD_ASSESSMENT: `${BASE_URL}/assessment/add-assessment`,
+    },
+    USER_BATCHES: {
+        FETCH_USER_BATCH: `${BASE_URL}/batches/fetch-batches`,
+    },
+    USER_ASSESSMENT: {
+        FETCH_USER_ASSESSMENT: `${BASE_URL}/assessment/fetch-assessment`,
+    },
+    USER_EXAM_QUESTIONS : {     
+        FETCH_USER_EXAM_QUESTIONS : `${BASE_URL}/questions/fetch-questions`
     }
-}
+};

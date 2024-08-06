@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../Pagination/Pagination";
  
 const columns = [
-  { Header: "S.No", accessor: "sno", sortable: true },
+  { Header: "S.No", accessor: "sno"},
   { Header: 'Batch Name', accessor: 'BatchName', sortable: true },
   { Header: 'User Name', accessor: 'userNames', sortable: false },
 ];
@@ -30,7 +30,7 @@ const Batches = () => {
         const usernames = users.map(user => user.username);
 
         return {
-          sno: index + 1,
+          sno: (currentPage - 1) * 10 + index + 1,
           BatchName: row.batch_name,
           usernames,
           showFullList: false, // Initialize showFullList

@@ -8,8 +8,12 @@ const UserDashboard = () => {
 
     return (
         <div className="dashboard-container">
-            <UserBatches onSelectBatch={setSelectedBatch} />
-            <UserAssessment selectedBatch={selectedBatch}  />
+            <div className='dashboard-card'>
+            <UserBatches  />
+            <UserAssessment />
+                
+            </div>
+            
         </div>
     );
 }

@@ -79,3 +79,8 @@ label{
    font-size: 18px;
    
 }
+
+.form-controls-styling{
+    height: 2rem;
+    width : 14rem
+}

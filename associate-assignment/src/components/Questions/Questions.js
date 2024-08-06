@@ -210,7 +210,7 @@ const QuestionsForm = () => {
                                                 type="text"
                                                 
                                                 placeholder='Add Option'
-                                                className="custom-outline-bottom ms-2"
+                                                className="custom-outline-bottom form-controls-styling ms-2"
                                                 name="option"
                                                 value={option.option}
                                                 onChange={(e) => handleOptionChange(index, optionIndex, e)}
@@ -275,7 +275,7 @@ const QuestionsForm = () => {
                                                 type="text"
                                             
                                                 placeholder='Add Option'
-                                                className="custom-outline-bottom ms-2"
+                                                className="custom-outline-bottom ms-2 form-controls-styling"
                                                 name="option"
                                                 value={option.option}
                                                 onChange={(e) => handleOptionChange(index, optionIndex, e)}

@@ -34,7 +34,7 @@ const Assessments = () => {
   useEffect(() => {
     if (dataState.assessments && dataState.assessments.Assessments && dataState.assessments.Assessments.length > 0) {
       const newData = dataState.assessments.Assessments.map((row, index) => ({
-        sno: index + 1,
+        sno: (currentPage - 1) * 10 + index + 1,
         assessmentName: row.assessment_name,
         batchName: row.role.batch_name,
         createdDate : row.created_date, 
