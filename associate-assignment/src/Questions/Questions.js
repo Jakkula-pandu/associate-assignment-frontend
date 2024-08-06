@@ -2,22 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Questions.css";
 
-// const CreateFormService = () => {
-//   let selectedQuestions = [];
-//   const setOption = (options) => {
-//     selectedQuestions = options;
-//   };
-
-//   const getOption = () => {
-//     return selectedQuestions;
-//   };
-
-//   return {
-//     setOption,
-//     getOption,
-//   };
-// };
-
 const MyForm = () => {
   const [expand, setExpand] = useState(false);
   const [user, setUser] = useState([]);

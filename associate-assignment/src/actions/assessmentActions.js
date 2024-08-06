@@ -24,10 +24,32 @@ export const fetchAssessmentFailure = (error) => ({
 });
 
 export const fetchAssessment = (page, search) => {
+  console.log("page", page);
+
   return (dispatch) => {
     dispatch(fetchAssessmentRequest());
-    axios
-      .get(`${API_URLS.ASSESSMENT.FETCH_ASSESSMENT}?page=${page} &search=${search}`)
+
+    // Determine the base URL
+    let url = `${API_URLS.ASSESSMENT.FETCH_ASSESSMENT}`;
+    
+    // Add query parameters if necessary
+    const params = new URLSearchParams();
+    if (page) {
+      params.append('page', page);
+    }
+    if (search) {
+      params.append('search', search);
+    }
+    if (page && page.batchName && page.batchName.value) {
+      params.append('batch_id', page.batchName.value);
+    }
+
+    // Append parameters to URL
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+
+    axios.get(url)
       .then((response) => {
         const assessmentData = response.data;
         dispatch(fetchAssessmentSuccess(assessmentData));
@@ -37,6 +59,7 @@ export const fetchAssessment = (page, search) => {
       });
   };
 };
+
 
 export const addAssessmentRequest = () => ({
   type: ADD_ASSESSMENT_REQUEST,
@@ -54,25 +77,25 @@ export const addAssessmentFailure = (error) => ({
 
 
 export const addAssessment = (requestBody, batchName) => {
-
   return (dispatch) => {
     dispatch(addAssessmentRequest());
-    axios
-    .post(`${API_URLS.ASSESSMENT.ADD_ASSESSMENT}`, requestBody, {
-      headers: {
-        'role_id': 2,
-        'batch_id' : batchName.value
-      },
-    })
-      .then((response) => {
-        dispatch(addAssessmentSuccess(response.data));
-      })
-      .catch((error) => {
-        dispatch(addAssessmentFailure(error.message));
-      });
+    return axios
+        .post(`${API_URLS.ASSESSMENT.ADD_ASSESSMENT}`, requestBody, {
+          headers: {
+            'role_id': 2,
+            'batch_id': batchName.value,
+          },
+        })
+        .then((response) => {
+          const addedAssessment = response.data;
+          dispatch(addAssessmentSuccess(addedAssessment));
+          return(response);  
+        })
+        .catch((error) => {
+          dispatch(addAssessmentFailure(error.message));
+          throw(error);  
+        });
   };
 };
-
-
 
 

@@ -4,6 +4,7 @@ import userReducer from './apireducers';
 import batchReducer from './batchReducer'; 
 import trainingReducer from './trainingReducer';
 import assessmentReducer from './assessmentReducer';
+import questionsReducer from './questionsReducer';
 
 const rootReducer = combineReducers({
     tab : tabReducer,
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
     batchdata:batchReducer,
     addbatchdata :batchReducer,
     trainingsdata : trainingReducer,
-    assessmentData : assessmentReducer
+    assessmentData : assessmentReducer,
+    questionsData : questionsReducer
 });
 
 export default rootReducer;

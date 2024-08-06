@@ -43,7 +43,7 @@ import {
         return {
           ...state,
           loading: false,
-          batches: [...state.batches, action.payload],
+          assessments: [],
           error: "",
         };
       case ADD_ASSESSMENT_FAILURE:

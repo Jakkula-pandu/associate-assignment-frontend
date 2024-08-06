@@ -1,761 +1,435 @@
-// // import React, { useState } from 'react';
-// // import './Questions.css'
-
-// // const QuestionsForm = () => {
-// //     const [expand, setExpand] = useState(false);
-// //     const [user, setUser] = useState([]);
-// //     const [selectedOption, setSelectedOption] = useState(null);
-
-// //     const submit = (event) => {
-// //         event.preventDefault()
-// //         const selectedQuestions = user;
-// //         console.log("selectedQuestions>>>", selectedQuestions);
-// //         // dataService.setOption(selectedQuestions);
-// //         // history.push('/formAnswers');
-// //     };
-
-// //     const addText = () => {
-// //         setUser([...user, {
-// //             questions: [{ question: '', answer: '', type: 'text' }],
-// //             // options: [],
-// //         }]);
-// //     };
-
-// //     const addSelect = () => {
-// //         setUser([...user, {
-// //             questions: [{ question: '', type: 'radio', answer: '' }],
-// //             options: [
-// //                 { type: 'radio', option: '', isSelected: false },
-// //                 { type: 'radio', option: '', isSelected: false },
-// //             ],
-// //         }]);
-// //     };
-
-// //     const addOptions = (index) => {
-// //         const newUser = [...user];
-// //         newUser[index].options.push({ type: 'radio', option: '', isSelected: false });
-// //         setUser(newUser);
-// //     };
-
-// //     const toggleExpand = () => {
-// //         setExpand(!expand);
-// //     };
-
-// //     const handleInputChange = (index, questionIndex, event) => {
-// //         const { name, value } = event.target;
-// //         const newUser = [...user];
-// //         newUser[index].questions[questionIndex][name] = value;
-// //         setUser(newUser);
-// //     };
-
-// //     const handleOptionChange = (index, optionIndex, event) => {
-// //         const { value } = event.target;
-// //         const newUser = [...user];
-// //         newUser[index].options[optionIndex].option = value;
-// //         setUser(newUser);
-// //     };
-
-// //     const handleRadioChange = (index, optionIndex) => {
-// //         const newUser = [...user];
-// //         newUser[index].options.forEach((option, i) => {
-// //             option.isSelected = i === optionIndex;
-// //         });
-// //         setUser(newUser);
-// //     };
-// //     return (
-// //         <form onSubmit={submit} className="total_container">
-// //             <div className="card first_card_container">
-// //                 {user.map((key, index) => (
-// //                     <div key={index} className="card each_card">
-// //                         <br />
-// //                         {(key.questions[0].type === 'text') && (
-// //                             <div className="d-flex">
-// //                                 <span>{index + 1}.</span>
-// //                                 <span className="flex-grow-1 ps-2">
-// //                                     <input
-// //                                         id={key.questions[0].question + index}
-// //                                         type="text"
-// //                                         className="form-control custom-outline-bottom"
-// //                                         required
-// //                                         name="question"
-// //                                         placeholder="Enter the question"
-// //                                         value={key.questions[0].question}
-// //                                         onChange={(e) => handleInputChange(index, 0, e)}
-// //                                     />
-// //                                     {!key.questions[0].question && (
-// //                                         <p className="text-danger mb-2">Question is required.</p>
-// //                                     )}
-// //                                     <input
-// //                                         id={key}
-// //                                         type={key.questions[0].type}
-// //                                         required
-// //                                         className="form-control custom-outline-input"
-// //                                         placeholder="Enter Your Answer"
-// //                                         name="answer"
-// //                                         value={key.questions[0].answer}
-// //                                         onChange={(e) => handleInputChange(index, 0, e)}
-// //                                     />
-// //                                 </span>
-// //                             </div>
-// //                         )}
-// //                         {key.questions[0].type === 'radio' && (
-// //                             <div className="d-flex">
-// //                                 <span>{index + 1}.</span>
-// //                                 <span className="flex-grow-1 ps-2">
-// //                                     <input
-// //                                         id={key.questions[0].question + index}
-// //                                         type="text"
-// //                                         className="form-control custom-outline-bottom "
-// //                                         required
-// //                                         name="question"
-// //                                         placeholder="Enter the question"
-// //                                         value={key.questions[0].question}
-// //                                         onChange={(e) => handleInputChange(index, 0, e)}
-// //                                     />
-// //                                     {!key.questions[0].question && (
-// //                                         <p className="text-danger mb-2">Question is required.</p>
-// //                                     )}
-// //                                     {key.options.map((option, optionIndex) => (
-// //                                         <div key={optionIndex}>
-// //                                             <input
-// //                                                 id={key}
-// //                                                 type="text"
-// //                                                 required
-// //                                                 className="custom-outline-bottom ms-2"
-// //                                                 name="option"
-// //                                                 value={option.option}
-// //                                                 onChange={(e) => handleOptionChange(index, optionIndex, e)}
-// //                                             />
-// //                                             <input
-// //                                                 id={key}
-// //                                                 type={option.type}
-// //                                                 required
-// //                                                 name="optionGroup"
-// //                                                 value={option.option}
-// //                                                 checked={option.isSelected}
-// //                                                 className="form-check-input radio-button-style ms-2"
-// //                                                 onChange={() => handleRadioChange(index, optionIndex)}
-// //                                             />
-// //                                         </div>
-// //                                     ))}
-// //                                     <button
-// //                                         type="button"
-// //                                         className="btn btn-primary"
-// //                                         onClick={() => addOptions(index)}
-// //                                     >
-// //                                         +
-// //                                     </button>
-// //                                 </span>
-// //                             </div>
-// //                         )}
-// //                     </div>
-// //                 ))}
-// //                 <br />
-// //                 <br />
-// //                 <div onClick={toggleExpand} className="button-modify">
-// //                     <button type="button" className="toggle-button">
-// //                         +<span className="ms-2">{!expand && 'Add New'}</span>
-// //                     </button>
-// //                     {expand && (
-// //                         <>
-// //                             <button type="button" className="btn btn-light each-button" onClick={addText}>
-// //                                 Text
-// //                             </button>
-// //                             <button type="button" className="btn btn-light each-button ms-2" onClick={addSelect}>
-// //                                 Choice
-// //                             </button>
-// //                         </>
-// //                     )}
-// //                 </div>
-// //                 <div>
-// //                     <button type="submit" className="btn btn-secondary mt-3">
-// //                         Submit
-// //                     </button>
-// //                 </div>
-// //             </div>
-// //         </form>
-// //     );
-// // };
-
-// // export default QuestionsForm;
-
-
-// import React, { useState } from 'react';
-// import './Questions.css'
-
-// const QuestionsForm = () => {
-//     const [expand, setExpand] = useState(false);
-//     const [user, setUser] = useState([]);
-//     const [errors, setErrors] = useState({});
-
-//     const validate = () => {
-//         const newErrors = {};
-
-//         user.forEach((q, qIndex) => {
-//             if (!q.questions[0].question) {
-//                 newErrors[`question-${qIndex}`] = 'Question is required.';
-//             }
-
-//             if (q.questions[0].type === 'text' && !q.questions[0].answer) {
-//                 newErrors[`answer-${qIndex}`] = 'Answer is required.';
-//             }
-
-//             if (q.questions[0].type === 'radio') {
-//                 if (q.options.some(option => !option.option)) {
-//                     newErrors[`options-${qIndex}`] = 'All options must be filled.';
-//                 }
-//                 if (!q.options.some(option => option.isSelected)) {
-//                     newErrors[`selection-${qIndex}`] = 'One option must be selected.';
-//                 }
-//             }
-//         });
-
-//         setErrors(newErrors);
-//         return Object.keys(newErrors).length === 0;
-//     };
-
-//     const submit = (event) => {
-//         event.preventDefault();
-//         if (validate()) {
-//             const selectedQuestions = user;
-//             console.log("selectedQuestions>>>", selectedQuestions);
-//             // dataService.setOption(selectedQuestions);
-//             // history.push('/formAnswers');
-//         }
-//     };
-
-//     const addText = () => {
-//         setUser([...user, {
-//             questions: [{ question: '', answer: '', type: 'text' }],
-//         }]);
-//     };
-
-//     const addSelect = () => {
-//         setUser([...user, {
-//             questions: [{ question: '', type: 'radio', answer: '' }],
-//             options: [
-//                 { type: 'radio', option: '', isSelected: false },
-//                 { type: 'radio', option: '', isSelected: false },
-//             ],
-//         }]);
-//     };
-
-//     const addOptions = (index) => {
-//         const newUser = [...user];
-//         newUser[index].options.push({ type: 'radio', option: '', isSelected: false });
-//         setUser(newUser);
-//     };
-
-//     const toggleExpand = () => {
-//         setExpand(!expand);
-//     };
-
-//     const handleInputChange = (index, questionIndex, event) => {
-//         const { name, value } = event.target;
-//         const newUser = [...user];
-//         newUser[index].questions[questionIndex][name] = value;
-//         setUser(newUser);
-//         setErrors((prevErrors) => {
-//             const newErrors = { ...prevErrors };
-//             if (value) {
-//                 delete newErrors[`question-${index}`];
-//                 if (name === 'answer') {
-//                     delete newErrors[`answer-${index}`];
-//                 }
-//             }
-//             return newErrors;
-//         });
-//     };
-
-//     const handleOptionChange = (index, optionIndex, event) => {
-//         const { value } = event.target;
-//         const newUser = [...user];
-//         newUser[index].options[optionIndex].option = value;
-//         setUser(newUser);
-//         setErrors((prevErrors) => {
-//             const newErrors = { ...prevErrors };
-//             if (value) {
-//                 delete newErrors[`options-${index}`];
-//             }
-//             return newErrors;
-//         });
-//     };
-
-//     const handleRadioChange = (index, optionIndex) => {
-//         const newUser = [...user];
-//         newUser[index].options.forEach((option, i) => {
-//             option.isSelected = i === optionIndex;
-//         });
-//         setUser(newUser);
-//         setErrors((prevErrors) => {
-//             const newErrors = { ...prevErrors };
-//             delete newErrors[`selection-${index}`];
-//             return newErrors;
-//         });
-//     };
-
-//     return (
-//         <form onSubmit={submit} className="total_container">
-//             <div className="card first_card_container">
-//                 {user.map((key, index) => (
-//                     <div key={index} className="card each_card">
-//                         <br />
-//                         {(key.questions[0].type === 'text') && (
-//                             <div className="d-flex">
-//                                 <span>{index + 1}.</span>
-//                                 <span className="flex-grow-1 ps-2">
-//                                     <input
-//                                         id={key.questions[0].question + index}
-//                                         type="text"
-//                                         className="form-control custom-outline-bottom"
-//                                         required
-//                                         name="question"
-//                                         placeholder="Enter the question"
-//                                         value={key.questions[0].question}
-//                                         onChange={(e) => handleInputChange(index, 0, e)}
-//                                     />
-//                                     {errors[`question-${index}`] && (
-//                                         <p className="text-danger mb-2">{errors[`question-${index}`]}</p>
-//                                     )}
-//                                     <input
-//                                         id={key}
-//                                         type={key.questions[0].type}
-//                                         required
-//                                         className="form-control custom-outline-input"
-//                                         placeholder="Enter Your Answer"
-//                                         name="answer"
-//                                         value={key.questions[0].answer}
-//                                         onChange={(e) => handleInputChange(index, 0, e)}
-//                                     />
-//                                     {errors[`answer-${index}`] && (
-//                                         <p className="text-danger mb-2">{errors[`answer-${index}`]}</p>
-//                                     )}
-//                                 </span>
-//                             </div>
-//                         )}
-//                         {key.questions[0].type === 'radio' && (
-//                             <div className="d-flex">
-//                                 <span>{index + 1}.</span>
-//                                 <span className="flex-grow-1 ps-2">
-//                                     <input
-//                                         id={key.questions[0].question + index}
-//                                         type="text"
-//                                         className="form-control custom-outline-bottom "
-//                                         required
-//                                         name="question"
-//                                         placeholder="Enter the question"
-//                                         value={key.questions[0].question}
-//                                         onChange={(e) => handleInputChange(index, 0, e)}
-//                                     />
-//                                     {errors[`question-${index}`] && (
-//                                         <p className="text-danger mb-2">{errors[`question-${index}`]}</p>
-//                                     )}
-//                                     {key.options.map((option, optionIndex) => (
-//                                         <div key={optionIndex}>
-//                                             <input
-//                                                 id={key}
-//                                                 type="text"
-//                                                 required
-//                                                 placeholder='Add Option'
-//                                                 className=" custom-outline-bottom ms-2"
-//                                                 name="option"
-//                                                 value={option.option}
-//                                                 onChange={(e) => handleOptionChange(index, optionIndex, e)}
-//                                             />
-//                                             <input
-//                                                 id={key}
-//                                                 type={option.type}
-//                                                 required
-//                                                 name={`optionGroup-${optionIndex}`}
-//                                                 value={option.option}
-//                                                 checked={option.isSelected}
-//                                                 className="form-check-input radio-button-style ms-2"
-//                                                 onChange={() => handleRadioChange(index, optionIndex)}
-//                                             />
-//                                         </div>
-//                                     ))}
-//                                     {errors[`options-${index}`] && (
-//                                         <p className="text-danger mb-2">{errors[`options-${index}`]}</p>
-//                                     )}
-//                                     {errors[`selection-${index}`] && (
-//                                         <p className="text-danger mb-2">{errors[`selection-${index}`]}</p>
-//                                     )}
-//                                     <button
-//                                         type="button"
-//                                         className="btn btn-primary"
-//                                         onClick={() => addOptions(index)}
-//                                     >
-//                                         +
-//                                     </button>
-//                                 </span>
-//                             </div>
-//                         )}
-//                     </div>
-//                 ))}
-//                 <br />
-//                 <br />
-//                 <div onClick={toggleExpand} className="button-modify">
-//                     <button type="button" className="toggle-button">
-//                         +<span className="ms-2">{!expand && 'Add New'}</span>
-//                     </button>
-//                     {expand && (
-//                         <>
-//                             <button type="button" className="btn btn-light each-button" onClick={addText}>
-//                                 Text
-//                             </button>
-//                             <button type="button" className="btn btn-light each-button ms-2" onClick={addSelect}>
-//                                 Choice
-//                             </button>
-//                         </>
-//                     )}
-//                 </div>
-//                 <div>
-//                     <button type="submit" className="btn btn-secondary mt-3">
-//                         Submit
-//                     </button>
-//                 </div>
-//             </div>
-//         </form>
-//     );
-// };
-
-// export default QuestionsForm;
-
-
-import React, { useState } from 'react';
-import './Questions.css'
+import React, { useState, useEffect, useCallback } from "react";
+import "./Questions.css";
+import { ADD_ASSESSMENT_LABELS, ERROR_MESSAGES } from "../../constants/uiTextSamples";
+import Select from "react-select";
+import { fetchAssessment } from "../../actions/assessmentActions";
+import { useDispatch, useSelector } from "react-redux";
+import { addQuestions } from "../../actions/questionsActions";
+import { ALERT_TEXT } from "../../constants/uiTextSamples";
+import Swal from "sweetalert2";
+import { fetchBatch } from '../../actions/batchesActions';
 
 const QuestionsForm = () => {
-    const [expand, setExpand] = useState(false);
-    const [user, setUser] = useState([]);
-    const [errors, setErrors] = useState({});
+  const [expand, setExpand] = useState(false);
+  const [assessmentDetails, setassessmentDetails] = useState([]);
+  const [batchDetails,setBatchDetails] = useState([]); 
+  const batchesData = useSelector((state) => state.batchdata);
+  const dataState = useSelector((state) => state.assessmentData);
+  const [user, setUser] = useState([]);
+  const [errors, setErrors] = useState({});
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    assessmentName: null,
+    batchName : null
+  });
 
-    const validate = () => {
-        const newErrors = {};
+  const validate = () => {
+    const newErrors = {};
 
-        user.forEach((q, qIndex) => {
-            if (!q.questions[0].question) {
-                newErrors[`question-${qIndex}`] = 'Question is required.';
-            }
+    user.forEach((q, qIndex) => {
+      if (!q.question_text) {
+        newErrors[`question_text-${qIndex}`] = ERROR_MESSAGES.QUESTION_IS_REQUIRED;
+      }
 
-            if (q.questions[0].type === 'text' && !q.questions[0].answer) {
-                newErrors[`answer-${qIndex}`] = 'Answer is required.';
-            }
+      if (q.question_type === ERROR_MESSAGES.TEXT && !q.correct_answers.length) {
+        newErrors[`answer-${qIndex}`] = ERROR_MESSAGES.ANSWER_IS_REQUIRED;
+      }
 
-            if (q.questions[0].type === 'radio') {
-                if (q.options.some(option => !option.option)) {
-                    newErrors[`options-${qIndex}`] = 'All options must be filled.';
-                }
-                if (!q.options.some(option => option.isSelected)) {
-                    newErrors[`selection-${qIndex}`] = 'One option must be selected.';
-                }
-            }
-
-            if (q.questions[0].type === 'checkbox') {
-                if (q.options.some(option => !option.option)) {
-                    newErrors[`options-${qIndex}`] = 'All options must be filled.';
-                }
-                if (!q.options.some(option => option.isSelected)) {
-                    newErrors[`selection-${qIndex}`] = 'At least one option must be selected.';
-                }
-            }
-        });
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    const submit = (event) => {
-        event.preventDefault();
-        if (validate()) {
-            const selectedQuestions = user;
-            console.log("selectedQuestions>>>", selectedQuestions);
-            // dataService.setOption(selectedQuestions);
-            // history.push('/formAnswers');
+      if (q.question_type === ERROR_MESSAGES.MULTIPLE_CHOICE) {
+        if (q.options.some((option) => !option.option)) {
+          newErrors[`options-${qIndex}`] = ERROR_MESSAGES.ALL_OPTIONS_MUST_BE_FILLED;
         }
-    };
+        if (!q.options.some((option) => option.isCorrect)) {
+          newErrors[`selection-${qIndex}`] =
+           ERROR_MESSAGES.ATLEAST_ONE_OPTION;
+        }
+      }
+    });
 
-    const addText = () => {
-        setUser([...user, {
-            questions: [{ question: '', answer: '', type: 'text' }],
-        }]);
-    };
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    const addSelect = () => {
-        setUser([...user, {
-            questions: [{ question: '', type: 'radio', answer: '' }],
-            options: [
-                { type: 'radio', option: '', isSelected: false },
-                { type: 'radio', option: '', isSelected: false },
-            ],
-        }]);
-    };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (validate()) {
+      const selectedQuestions = user;
+      const { assessmentName,batchName } = formData;
+      dispatch(addQuestions(selectedQuestions, assessmentName))
+        .then((response) => {
+          if (response.status === 200) {
+            Swal.fire({
+              title: ALERT_TEXT.SUCCESS,
+              text: response.data.message,
+              icon: "success",
+              confirmButtonText: ALERT_TEXT.OK,
+            }).then(() => {
+              setUser([]);
+              setFormData({ assessmentName: "" ,batchName :"" });
+              setErrors({});
+            });
+          } else {
+            Swal.fire({
+              title: ALERT_TEXT.ERROR,
+              text: response.data.message,
+              icon: "error",
+              confirmButtonText: ALERT_TEXT.OK,
+            });
+          }
+        })
+        .catch((error) => {
+          Swal.fire({
+            title: ALERT_TEXT.ERROR,
+            text: error.response?.data?.message || error.message,
+            icon: "error",
+            confirmButtonText: ALERT_TEXT.OK,
+          });
+        });
+    }
+  };
+  useEffect(() => {
+    dispatch(fetchBatch());
+  }, [dispatch]);
 
-    const addMultiSelect = () => {
-        setUser([...user, {
-            questions: [{ question: '', type: 'checkbox', answer: '' }],
-            options: [
-                { type: 'checkbox', option: '', isSelected: false },
-                { type: 'checkbox', option: '', isSelected: false },
-            ],
-        }]);
-    };
+  useEffect(() => {
+    if (
+      batchesData.batches &&
+      batchesData.batches.Batches &&
+      batchesData.batches.Batches.length > 0
+    ) {
+      const newBatchData = batchesData.batches.Batches.map((batch) => ({
+        value: batch.batch_id,
+        label: batch.batch_name,
+      }));
+      setBatchDetails(newBatchData);
+    }
+  }, [batchesData.batches]);
 
-    const addOptions = (index) => {
-        const newUser = [...user];
-        newUser[index].options.push({ type: user[index].questions[0].type, option: '', isSelected: false });
-        setUser(newUser);
-    };
+  useEffect(() => {
+    console.log("formData%%%%%%%%%",formData);
+    
+    dispatch(fetchAssessment(formData));
+  }, [dispatch, formData]);
 
-    const toggleExpand = () => {
-        setExpand(!expand);
-    };
 
-    const handleInputChange = (index, questionIndex, event) => {
-        const { name, value } = event.target;
-        const newUser = [...user];
-        newUser[index].questions[questionIndex][name] = value;
-        setUser(newUser);
-        setErrors((prevErrors) => {
-            const newErrors = { ...prevErrors };
-            if (value) {
-                delete newErrors[`question-${index}`];
-                if (name === 'answer') {
-                    delete newErrors[`answer-${index}`];
-                }
+  useEffect(() => {
+    if (
+      dataState.assessments &&
+      dataState.assessments.Assessments &&
+      dataState.assessments.Assessments.length > 0
+    ) {
+      const newData = dataState.assessments.Assessments.map((assessments) => ({
+        value: assessments.assessment_id,
+        label: assessments.assessment_name,
+      }));
+      setassessmentDetails(newData);
+    }
+  }, [dataState.assessments]);
+
+  const addText = () => {
+    setUser([
+      ...user,
+      {
+        question_text: "",
+        question_type: ERROR_MESSAGES.TEXT,
+        correct_answers: [],
+      },
+    ]);
+  };
+
+  const addMultiSelect = () => {
+    setUser([
+      ...user,
+      {
+        question_text: "",
+        question_type: ERROR_MESSAGES.MULTIPLE_CHOICE,
+        options: [
+          { option: "", isCorrect: false },
+          { option: "", isCorrect: false },
+        ],
+        correct_answers: [],
+      },
+    ]);
+  };
+
+  const addOptions = (index) => {
+    const newUser = [...user];
+    newUser[index].options.push({
+      option: "",
+      isCorrect: false,
+    });
+    setUser(newUser);
+  };
+
+  const toggleExpand = () => {
+    setExpand(!expand);
+  };
+
+  const handleInputChange = (index, event) => {
+    const { name, value } = event.target;
+    const newUser = [...user];
+    newUser[index][name] = value;
+    setUser(newUser);
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      if (value) {
+        delete newErrors[`question_text-${index}`];
+        if (name === "answer") {
+          delete newErrors[`answer-${index}`];
+        }
+      }
+      return newErrors;
+    });
+  };
+
+  const handleOptionChange = (index, optionIndex, event) => {
+    const { value } = event.target;
+    const newUser = [...user];
+    newUser[index].options[optionIndex].option = value;
+    setUser(newUser);
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      if (value) {
+        delete newErrors[`options-${index}`];
+      }
+      return newErrors;
+    });
+  };
+
+  const handleCheckboxChange = (index, optionIndex) => {
+    const newUser = [...user];
+    newUser[index].options[optionIndex].isCorrect =
+      !newUser[index].options[optionIndex].isCorrect;
+    if (newUser[index].options[optionIndex].isCorrect) {
+      if (
+        !newUser[index].correct_answers.includes(
+          newUser[index].options[optionIndex].option
+        )
+      ) {
+        newUser[index].correct_answers.push(
+          newUser[index].options[optionIndex].option
+        );
+      }
+    } else {
+      newUser[index].correct_answers = newUser[index].correct_answers.filter(
+        (answer) => answer !== newUser[index].options[optionIndex].option
+      );
+    }
+    setUser(newUser);
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      delete newErrors[`selection-${index}`];
+      return newErrors;
+    });
+  };
+
+  const removeQuestion = (index) => {
+    const newUser = [...user];
+    newUser.splice(index, 1);
+    setUser(newUser);
+  };
+
+  const onValidate = (value, name) => {
+    setErrors((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const onHandleChange = useCallback((value, name) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    onValidate("", name);
+    console.log("formdata^^^^^^^^^^",formData);
+    
+    dispatch(fetchAssessment(formData));
+  }, []);
+
+  return (
+    <form onSubmit={handleSubmit} className="total_container">
+      <div className="card first_card_container">
+      <div className="input-styles">
+          <label htmlFor="batchName">
+            {ADD_ASSESSMENT_LABELS.BATCH_NAME}{" "}
+            <strong className="error-color">*</strong>
+          </label>
+          
+          <Select
+            id="batchName"
+            name="batchName"
+            options={batchDetails}
+            className="basic-single-select"
+            classNamePrefix="select"
+            value={formData.batchName}
+            onChange={(selectedOption) =>
+              onHandleChange(selectedOption, "batchName")
             }
-            return newErrors;
-        });
-    };
-
-    const handleOptionChange = (index, optionIndex, event) => {
-        const { value } = event.target;
-        const newUser = [...user];
-        newUser[index].options[optionIndex].option = value;
-        setUser(newUser);
-        setErrors((prevErrors) => {
-            const newErrors = { ...prevErrors };
-            if (value) {
-                delete newErrors[`options-${index}`];
+          />
+          {errors.batchName && (
+            <span className="error error-color">{errors.batchName}</span>
+          )}
+        </div>
+        <div className="input-styles">
+          <label htmlFor="assessmentName">
+            {ADD_ASSESSMENT_LABELS.ASSESSMENT_NAME}{" "}
+            <strong className="error-color">*</strong>
+          </label>
+          
+          <Select
+            id="assessmentName"
+            name="assessmentName"
+            options={assessmentDetails}
+            className="basic-single-select"
+            classNamePrefix="select"
+            value={formData.assessmentName}
+            onChange={(selectedOption) =>
+              onHandleChange(selectedOption, "assessmentName")
             }
-            return newErrors;
-        });
-    };
-
-    const handleRadioChange = (index, optionIndex) => {
-        const newUser = [...user];
-        newUser[index].options.forEach((option, i) => {
-            option.isSelected = i === optionIndex;
-        });
-        setUser(newUser);
-        setErrors((prevErrors) => {
-            const newErrors = { ...prevErrors };
-            delete newErrors[`selection-${index}`];
-            return newErrors;
-        });
-    };
-
-    const handleCheckboxChange = (index, optionIndex) => {
-        const newUser = [...user];
-        newUser[index].options[optionIndex].isSelected = !newUser[index].options[optionIndex].isSelected;
-        setUser(newUser);
-        setErrors((prevErrors) => {
-            const newErrors = { ...prevErrors };
-            delete newErrors[`selection-${index}`];
-            return newErrors;
-        });
-    };
-    const removeQuestion = (index) => {
-        const newUser = [...user];
-        newUser.splice(index, 1);
-        setUser(newUser);
-    };
-
-    return (
-        <form onSubmit={submit} className="total_container">
-            <div className="card first_card_container">
-                {user.map((key, index) => (
-                    <div key={index} className="card each_card">
-                           {/* <button type="button" className="btn btn-danger" onClick={() => removeQuestion(index)}>Remove</button> */}
-                           <i onClick={() => removeQuestion(index)} className="bi bi-x-circle-fill delete-icon"></i>
-                        {(key.questions[0].type === 'text') && (
-                            <div className="d-flex">
-                                <span>{index + 1}.</span>
-                                <span className="flex-grow-1 ps-2">
-                                    <input
-                                        id={key.questions[0].question + index}
-                                        type="text"
-                                        className="form-control custom-outline-bottom"
-                                        
-                                        name="question"
-                                        placeholder="Enter the question"
-                                        value={key.questions[0].question}
-                                        onChange={(e) => handleInputChange(index, 0, e)}
-                                    />
-                                    {errors[`question-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`question-${index}`]}</p>
-                                    )}
-                                    <input
-                                        id={key}
-                                        type={key.questions[0].type}
-                                        
-                                        className="form-control custom-outline-input"
-                                        placeholder="Enter Your Answer"
-                                        name="answer"
-                                        value={key.questions[0].answer}
-                                        onChange={(e) => handleInputChange(index, 0, e)}
-                                    />
-                                    {errors[`answer-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`answer-${index}`]}</p>
-                                    )}
-                                </span>
-                            </div>
-                        )}
-                        {key.questions[0].type === 'radio' && (
-                            <div className="d-flex">
-                                <span>{index + 1}.</span>
-                                <span className="flex-grow-1 ps-2">
-                                    <input
-                                        id={key.questions[0].question + index}
-                                        type="text"
-                                        className="form-control custom-outline-bottom "
-                                        
-                                        name="question"
-                                        placeholder="Enter the question"
-                                        value={key.questions[0].question}
-                                        onChange={(e) => handleInputChange(index, 0, e)}
-                                    />
-                                    {errors[`question-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`question-${index}`]}</p>
-                                    )}
-                                    {key.options.map((option, optionIndex) => (
-                                        <div key={optionIndex}>
-                                            <input
-                                                id={key}
-                                                type="text"
-                                                
-                                                placeholder='Add Option'
-                                                className="custom-outline-bottom ms-2"
-                                                name="option"
-                                                value={option.option}
-                                                onChange={(e) => handleOptionChange(index, optionIndex, e)}
-                                            />
-                                            <input
-                                                id={key}
-                                                type={option.type}
-                                            
-                                                name={`optionGroup-${optionIndex}`}
-                                                value={option.option}
-                                                checked={option.isSelected}
-                                                className="form-check-input radio-button-style ms-2"
-                                                onChange={() => handleRadioChange(index, optionIndex)}
-                                            />
-                                        </div>
-                                    ))}
-                                    {errors[`options-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`options-${index}`]}</p>
-                                    )}
-                                    {errors[`selection-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`selection-${index}`]}</p>
-                                    )}
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        onClick={() => addOptions(index)}
-                                    >
-                                        +
-                                    </button>
-                                </span>
-                            </div>
-                        )}
-                        {key.questions[0].type === 'checkbox' && (
-                            <div className="d-flex">
-                                <span>{index + 1}.</span>
-                                <span className="flex-grow-1 ps-2">
-                                    <input
-                                        id={key.questions[0].question + index}
-                                        type="text"
-                                        className="form-control custom-outline-bottom"
-                                        
-                                        name="question"
-                                        placeholder="Enter the question"
-                                        value={key.questions[0].question}
-                                        onChange={(e) => handleInputChange(index, 0, e)}
-                                    />
-                                    {errors[`question-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`question-${index}`]}</p>
-                                    )}
-                                    {key.options.map((option, optionIndex) => (
-                                        <div key={optionIndex}>
-                                             <input
-                                                id={key}
-                                                type={option.type}
-                                                name={`optionGroup-${optionIndex}`}
-                                                value={option.option}
-                                                checked={option.isSelected}
-                                                className="form-check-input checkbox-button-style ms-2"
-                                                onChange={() => handleCheckboxChange(index, optionIndex)}
-                                            />
-                                            <input
-                                                id={key}
-                                                type="text"
-                                            
-                                                placeholder='Add Option'
-                                                className="custom-outline-bottom ms-2"
-                                                name="option"
-                                                value={option.option}
-                                                onChange={(e) => handleOptionChange(index, optionIndex, e)}
-                                            />
-                                           
-                                        </div>
-                                    ))}
-                                    {errors[`options-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`options-${index}`]}</p>
-                                    )}
-                                    {errors[`selection-${index}`] && (
-                                        <p className="text-danger mb-2">{errors[`selection-${index}`]}</p>
-                                    )}
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        onClick={() => addOptions(index)}
-                                    >
-                                        +
-                                    </button>
-                                </span>
-                            </div>
-                        )}
+          />
+          {errors.assessmentName && (
+            <span className="error error-color">{errors.assessmentName}</span>
+          )}
+        </div>
+        {user.map((key, index) => (
+          <div key={index} className="card each_card">
+            <i
+              onClick={() => removeQuestion(index)}
+              className="bi bi-x-circle-fill delete-icon"
+            ></i>
+            {key.question_type === "text" && (
+              <div className="d-flex">
+                <span>{index + 1}.</span>
+                <span className="flex-grow-1 ps-2">
+                  <input
+                    id={key.question_text + index}
+                    type="text"
+                    className="form-control custom-outline-bottom"
+                    name="question_text"
+                    placeholder="Enter the question_text"
+                    value={key.question_text}
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                  {errors[`question_text-${index}`] && (
+                    <p className="text-danger mb-2">
+                      {errors[`question_text-${index}`]}
+                    </p>
+                  )}
+                  <input
+                    type="text"
+                    className="form-control custom-outline-input"
+                    placeholder="Enter Your Answer"
+                    name="correct_answers"
+                    value={key.correct_answers || ""}
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                  {errors[`answer-${index}`] && (
+                    <p className="text-danger mb-2">
+                      {errors[`answer-${index}`]}
+                    </p>
+                  )}
+                </span>
+              </div>
+            )}
+            {key.question_type === "multiple_choice" && (
+              <div className="d-flex">
+                <span>{index + 1}.</span>
+                <span className="flex-grow-1 ps-2">
+                  <input
+                    id={key.question_text + index}
+                    type="text"
+                    className="form-control custom-outline-bottom "
+                    name="question_text"
+                    placeholder="Enter the question_text"
+                    value={key.question_text}
+                    onChange={(e) => handleInputChange(index, e)}
+                  />
+                  {errors[`question_text-${index}`] && (
+                    <p className="text-danger mb-2">
+                      {errors[`question_text-${index}`]}
+                    </p>
+                  )}
+                  {key.options.map((option, optionIndex) => (
+                    <div key={optionIndex}>
+                      <input
+                        id={`option-${index}-${optionIndex}`}
+                        type="text"
+                        placeholder="Add Option"
+                        className="custom-outline-bottom ms-2"
+                        name="option"
+                        value={option.option}
+                        onChange={(e) =>
+                          handleOptionChange(index, optionIndex, e)
+                        }
+                      />
+                      <input
+                        type="checkbox"
+                        name={`optionGroup-${optionIndex}`}
+                        value={option.option}
+                        checked={option.isCorrect}
+                        className="form-check-input checkbox-button-style ms-2 form-controls-styling"
+                        onChange={() =>
+                          handleCheckboxChange(index, optionIndex)
+                        }
+                      />
                     </div>
-                ))}
-                <br />
-                <br />
-                <div onClick={toggleExpand} className="button-modify">
-                    <button type="button" className="toggle-button">
-                        +<span className="ms-2">{!expand && 'Add New'}</span>
-                    </button>
-                    {expand && (
-                        <>
-                            <button type="button" className="btn btn-light each-button" onClick={addText}>
-                                Text
-                            </button>
-                            <button type="button" className="btn btn-light each-button ms-2" onClick={addSelect}>
-                                Choice
-                            </button>
-                            <button type="button" className="btn btn-light each-button ms-2" onClick={addMultiSelect}>
-                                Multi Choice
-                            </button>
-                        </>
-                    )}
-                </div>
-                <div>
-                    <button type="submit" className="btn btn-secondary mt-3">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </form>
-    );
+                  ))}
+                  {errors[`options-${index}`] && (
+                    <p className="text-danger mb-2">
+                      {errors[`options-${index}`]}
+                    </p>
+                  )}
+                  {errors[`selection-${index}`] && (
+                    <p className="text-danger mb-2">
+                      {errors[`selection-${index}`]}
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => addOptions(index)}
+                  >
+                    +
+                  </button>
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+        <br />
+        <br />
+        <div onClick={toggleExpand} className="button-modify">
+          <button type="button" className="toggle-button">
+            +<span className="ms-2">{!expand && "Add New"}</span>
+          </button>
+          {expand && (
+            <>
+              <button
+                type="button"
+                className="btn btn-light each-button"
+                onClick={addText}
+              >
+                Text
+              </button>
+              <button
+                type="button"
+                className="btn btn-light each-button ms-2"
+                onClick={addMultiSelect}
+              >
+                Multi Choice
+              </button>
+            </>
+          )}
+        </div>
+        <div>
+          <button type="submit" className="btn btn-secondary mt-3">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  );
 };
 
 export default QuestionsForm;
-

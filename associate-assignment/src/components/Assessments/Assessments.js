@@ -3,11 +3,12 @@ import TableData from '../Table/Table';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAssessment } from '../../actions/assessmentActions';
 import Pagination from '../Pagination/Pagination';
+import moment from 'moment';
+
 
 const CheckButton = ({ row }) => {
   const handleClick = () => {
   };
-
   return <button onClick={handleClick}>Check</button>;
 };
 
@@ -37,11 +38,14 @@ const Assessments = () => {
         sno: index + 1,
         assessmentName: row.assessment_name,
         batchName: row.role.batch_name,
-        createdDate : row.created_date, 
+        createdDate: moment(row.created_date).format('YYYY-MM-DD'),
       }));
+      console.log("newData",newData);
+      
       setAssessmentData(newData);
     }
   }, [dataState, dataState.assessments,currentPage, searchValue]);
+  
 
   const handleSort = (key, direction) => {
     const sortedData = [...assessmentData].sort((a, b) => {
@@ -52,15 +56,6 @@ const Assessments = () => {
     setAssessmentData(sortedData);
   };
 
-  // const handleSearch = (value) => {
-  //   setSearchValue(value);
-  //   const filteredData = assessmentData.filter((item) =>
-  //     Object.values(item).some((val) =>
-  //       String(val).toLowerCase().includes(value.toLowerCase())
-  //     )
-  //   );
-  //   setAssessmentData(filteredData);
-  // };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);

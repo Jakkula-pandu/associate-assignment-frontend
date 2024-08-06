@@ -66,7 +66,6 @@ const TestForm = () => {
 
     const submitExam = (event) => {
         event.preventDefault();
-        console.log("questions>>>>>", questions);
         Swal.fire({
             title: 'Submit',
             text: 'Are you sure you want to submit the exam?',

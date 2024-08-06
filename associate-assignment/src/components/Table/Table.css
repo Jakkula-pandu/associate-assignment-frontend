@@ -1,44 +1,41 @@
 .table-style {
-    min-height: 400px !important;
-   
-    border-radius: 10px;
+  min-height: 390px !important;
+  border-radius: 10px;
 }
 
 .table-style::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .tableFixHead {
-    overflow: auto;
-    height: 100px;
+  overflow: auto;
+  height: 100px;
 }
 
 .tableFixHead thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    background-color: #5395D2;
-    color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #5395d2;
+  color: white;
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
-    margin-bottom: 0rem !important;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 0rem !important;
 }
 
 th,
 td {
-    padding: 8px 16px;
+  padding: 8px 16px;
 }
 
 th {
-    background: #eee;
+  background: #eee;
 }
 
-
-
 .table-container {
-    max-height: 100%;
-    height: auto;
+  max-height: 100%;
+  height: auto;
 }

@@ -88,13 +88,12 @@ const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
       console.error("Invalid Form!");
       return false;
     } else {
-        const { batchName, assessmentName } = formData;
-           
+        const { batchName, assessmentName } = formData;   
         const requestBody = {
             assessment_name: assessmentName
         };
-        dispatch(addAssessment(requestBody,formData ))
-             .then((response) => {  
+        dispatch(addAssessment(requestBody,batchName ))
+             .then((response) => {               
           if (response.status === 200) {
             Swal.fire({
               title: ALERT_TEXT.SUCCESS,

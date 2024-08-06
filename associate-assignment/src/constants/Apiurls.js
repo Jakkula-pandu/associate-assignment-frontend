@@ -17,5 +17,11 @@ export const API_URLS = {
     ASSESSMENT : {
         FETCH_ASSESSMENT : 'http://localhost:1090/v0.1/assessment/fetch-assessment',
         ADD_ASSESSMENT : 'http://localhost:1090/v0.1/assessment/add-assessment'
+    },
+   
+    QUESTIONS : {
+        ADD_QUESTION : 'http://localhost:1090/v0.1/questions/add-questions'
+
     }
+
 }
