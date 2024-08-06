@@ -1,5 +1,5 @@
 .swiper {
-    width: 37% !important;
+    width: 57% !important;
     padding-top: 10px;
     padding-bottom: 10px;
     height: 237px !important;
@@ -27,4 +27,26 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+
+.swiper-cards.inactive {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.swiper-cards.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.batch-heading{
+    font-size: 22px;
+}
+.batch-bold{
+    font-weight: 600;
+}
+
+.batch-details-styling{
+    opacity: 0.7;
 }

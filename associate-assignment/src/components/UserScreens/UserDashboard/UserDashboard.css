@@ -7,3 +7,14 @@
 .dashboard-container::-webkit-scrollbar { 
     display: none;  
 }
+
+.dashboard-card{
+    overflow-y: scroll;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.dashboard-card::-webkit-scrollbar { 
+    display: none;  
+}
+

@@ -16,12 +16,22 @@
     min-height: 100%;
     height: 85vh;
     overflow-y: scroll;
+    
 }
 
 .exam-header{
     width: 20vw;
     text-align: center;
+    min-height: 100%;
+    height: 85vh;
+    overflow-y: scroll;
+    padding-bottom: 2rem;
 }
+
+.exam-header::-webkit-scrollbar {
+    width: 5px; 
+}
+
 
 .exam-card::-webkit-scrollbar {
     width: 5px; 

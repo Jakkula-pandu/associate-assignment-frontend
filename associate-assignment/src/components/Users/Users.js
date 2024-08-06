@@ -34,7 +34,7 @@ const Users = () => {
   useEffect(() => {
     if (dataState.users && dataState.users.allUsers && dataState.users.allUsers.length > 0) {
       const newData = dataState.users.allUsers.map((row, index) => ({
-        sno: index + 1,
+        sno: (currentPage - 1) * 10 + index + 1,
         UserName: row.username,
         Employeeid: row.empid,
         EmailId: row.email,
