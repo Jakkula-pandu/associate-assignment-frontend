@@ -22,9 +22,7 @@ export const fetchUserExamQuestions = ( assessmentId, page= 1 ) => {
     axios
       .get(`${API_URLS.USER_EXAM_QUESTIONS.FETCH_USER_EXAM_QUESTIONS}?assessment_id=${assessmentId}&page=${page}`) 
       .then((response) => {
-        const userExamQuestions = response.data;
-        console.log("responseresponse>>", response);
-        
+        const userExamQuestions = response.data;       
         dispatch(fetchUserExamQuestionsSuccess(userExamQuestions));
       })
       .catch((error) => {

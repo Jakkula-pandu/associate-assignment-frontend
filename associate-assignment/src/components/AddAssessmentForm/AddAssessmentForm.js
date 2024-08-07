@@ -23,11 +23,13 @@ const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
   const [formData, setFormData] = useState({
     batchName: "",
     assessmentName: null,
+    questions :""
   });
 
   const [errors, setErrors] = useState({
     batchName: "",
     assessmentName: "",
+    questions :""
   });
 
   const onValidate = (value, name) => {
@@ -76,6 +78,10 @@ const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
       newErrors.assessmentName = "Assessment name is required";
       isInvalid = true;
     }
+    if (!formData.questions) {
+      newErrors.questions = "Number of questions is required";
+      isInvalid = true;
+    }
 
     setErrors(newErrors);
     return !isInvalid;
@@ -88,9 +94,11 @@ const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
       console.error("Invalid Form!");
       return false;
     } else {
-        const { batchName, assessmentName } = formData;   
+        const { batchName, assessmentName,questions } = formData;   
         const requestBody = {
-            assessment_name: assessmentName
+            assessment_name: assessmentName,
+            no_of_questions :questions
+            
         };
         dispatch(addAssessment(requestBody,batchName ))
              .then((response) => {               
@@ -102,7 +110,7 @@ const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
               confirmButtonText: ALERT_TEXT.OK,
             }).then(() => {
               dispatch(fetchAssessment());
-              setFormData({ batchName: "", assessmentName: "" });
+              setFormData({ batchName: "", assessmentName: "",questions:"" });
               setErrors({});
               setOffcanvasProps({ activeTab: "tab2" });
               setShowOffcanvas(false);
@@ -147,7 +155,25 @@ const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
           <span className="error error-color">{errors.assessmentName}</span>
         )}
       </div>
-      <br />
+      <div>
+        <label htmlFor="questions">
+          {ADD_ASSESSMENT_LABELS.ENTER_NO_OF_QUESTIONS}{" "}
+          <strong className="error-color">*</strong>
+        </label>
+        <input
+          type="number"
+          id="questions"
+          name="questions"
+          className="form-control"
+          placeholder="Enter no. of questions"
+          value={formData.questions}
+          onChange={(e) => onHandleChange(e.target.value, "questions")}
+        />
+        {errors.questions && (
+          <span className="error error-color">{errors.questions}</span>
+        )}
+      </div>
+     
       <div>
         <label htmlFor="batchName">
           {ADD_ASSESSMENT_LABELS.BATCH_NAME}{" "}

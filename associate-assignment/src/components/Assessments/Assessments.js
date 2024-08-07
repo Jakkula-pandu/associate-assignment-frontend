@@ -39,9 +39,7 @@ const Assessments = () => {
         assessmentName: row.assessment_name,
         batchName: row.role.batch_name,
         createdDate: moment(row.created_date).format('YYYY-MM-DD'),
-      }));
-      console.log("newData",newData);
-      
+      }));    
       setAssessmentData(newData);
     }
   }, [dataState, dataState.assessments,currentPage, searchValue]);

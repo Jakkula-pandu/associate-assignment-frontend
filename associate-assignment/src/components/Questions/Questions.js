@@ -13,6 +13,9 @@ const QuestionsForm = () => {
   const [expand, setExpand] = useState(false);
   const [assessmentDetails, setassessmentDetails] = useState([]);
   const [batchDetails,setBatchDetails] = useState([]); 
+  const [isBatchSelected, setIsBatchSelected] = useState(false);
+  const [isAssessmentSelected, setIsAssessmentSelected] = useState(false);
+
   const batchesData = useSelector((state) => state.batchdata);
   const dataState = useSelector((state) => state.assessmentData);
   const [user, setUser] = useState([]);
@@ -20,12 +23,25 @@ const QuestionsForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     assessmentName: null,
-    batchName : null
+    batchName : null,
+    questions: ""
   });
 
   const validate = () => {
     const newErrors = {};
 
+    
+    if (!formData.batchName) {
+      newErrors.batchName = ERROR_MESSAGES.BATCH_NAME_IS_REQUIRED;
+    }
+
+    if (!formData.assessmentName) {
+      newErrors.assessmentName = ERROR_MESSAGES.ASSESSMENT_NAME_IS_REQUIRED;
+    }
+
+      // if (user.length === 0) {
+      //   newErrors.questions = ERROR_MESSAGES.AT_LEAST_ONE_QUESTION;
+      // }
     user.forEach((q, qIndex) => {
       if (!q.question_text) {
         newErrors[`question_text-${qIndex}`] = ERROR_MESSAGES.QUESTION_IS_REQUIRED;
@@ -55,6 +71,7 @@ const QuestionsForm = () => {
     if (validate()) {
       const selectedQuestions = user;
       const { assessmentName,batchName } = formData;
+      
       dispatch(addQuestions(selectedQuestions, assessmentName))
         .then((response) => {
           if (response.status === 200) {
@@ -65,8 +82,10 @@ const QuestionsForm = () => {
               confirmButtonText: ALERT_TEXT.OK,
             }).then(() => {
               setUser([]);
-              setFormData({ assessmentName: "" ,batchName :"" });
+              setFormData({ assessmentName: "" ,batchName :"",questions: ""  });
               setErrors({});
+              setIsBatchSelected(false);
+              setIsAssessmentSelected(false);
             });
           } else {
             Swal.fire({
@@ -106,10 +125,10 @@ const QuestionsForm = () => {
   }, [batchesData.batches]);
 
   useEffect(() => {
-    console.log("formData%%%%%%%%%",formData);
-    
-    dispatch(fetchAssessment(formData));
-  }, [dispatch, formData]);
+    if (isBatchSelected) {
+      dispatch(fetchAssessment(formData));
+    }
+  }, [dispatch, formData, isBatchSelected]);
 
 
   useEffect(() => {
@@ -121,9 +140,10 @@ const QuestionsForm = () => {
       const newData = dataState.assessments.Assessments.map((assessments) => ({
         value: assessments.assessment_id,
         label: assessments.assessment_name,
+        questions: assessments.no_of_questions
       }));
       setassessmentDetails(newData);
-    }
+    } 
   }, [dataState.assessments]);
 
   const addText = () => {
@@ -242,10 +262,21 @@ const QuestionsForm = () => {
       [name]: value,
     }));
     onValidate("", name);
-    console.log("formdata^^^^^^^^^^",formData);
-    
-    dispatch(fetchAssessment(formData));
-  }, []);
+    if (name === "assessmentName") {
+      const selectedAssessment = assessmentDetails.find(
+        (assessment) => assessment.value === value.value
+      );
+      setFormData((prev) => ({
+        ...prev,
+        questions: selectedAssessment.questions,
+      }));
+    }
+    if (name === "batchName") {
+      setIsBatchSelected(true);
+    } else if (name === "assessmentName") {
+      setIsAssessmentSelected(true);
+    }
+  }, [assessmentDetails]);
 
   return (
     <form onSubmit={handleSubmit} className="total_container">
@@ -266,6 +297,7 @@ const QuestionsForm = () => {
             onChange={(selectedOption) =>
               onHandleChange(selectedOption, "batchName")
             }
+            isDisabled={isBatchSelected}
           />
           {errors.batchName && (
             <span className="error error-color">{errors.batchName}</span>
@@ -287,10 +319,28 @@ const QuestionsForm = () => {
             onChange={(selectedOption) =>
               onHandleChange(selectedOption, "assessmentName")
             }
+            isDisabled={isAssessmentSelected}
           />
           {errors.assessmentName && (
             <span className="error error-color">{errors.assessmentName}</span>
           )}
+        </div>
+        <div>
+        <label htmlFor="questions">
+            {ADD_ASSESSMENT_LABELS.NO_OF_QUESTIONS
+            }{" "}
+            <strong className="error-color">*</strong>
+          </label>
+        <input
+          type="text"
+          id="questions"
+          name="questions"
+          className="form-control"
+          value={formData.questions}
+          readOnly
+      
+        />
+      
         </div>
         {user.map((key, index) => (
           <div key={index} className="card each_card">
@@ -399,9 +449,11 @@ const QuestionsForm = () => {
         ))}
         <br />
         <br />
-        <div onClick={toggleExpand} className="button-modify">
+        <div onClick={toggleExpand}  disabled={user.length >= formData.questions} className="button-modify">
+          
           <button type="button" className="toggle-button">
             +<span className="ms-2">{!expand && "Add New"}</span>
+            
           </button>
           {expand && (
             <>
@@ -409,6 +461,7 @@ const QuestionsForm = () => {
                 type="button"
                 className="btn btn-light each-button"
                 onClick={addText}
+                disabled={user.length >= formData.questions}
               >
                 Text
               </button>
@@ -416,6 +469,7 @@ const QuestionsForm = () => {
                 type="button"
                 className="btn btn-light each-button ms-2"
                 onClick={addMultiSelect}
+                disabled={user.length >= formData.questions}
               >
                 Multi Choice
               </button>
@@ -433,3 +487,5 @@ const QuestionsForm = () => {
 };
 
 export default QuestionsForm;
+
+
