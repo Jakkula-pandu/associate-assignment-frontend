@@ -24,15 +24,9 @@ export const fetchAssessmentFailure = (error) => ({
 });
 
 export const fetchAssessment = (page, search) => {
-  console.log("page", page);
-
   return (dispatch) => {
     dispatch(fetchAssessmentRequest());
-
-    // Determine the base URL
     let url = `${API_URLS.ASSESSMENT.FETCH_ASSESSMENT}`;
-    
-    // Add query parameters if necessary
     const params = new URLSearchParams();
     if (page) {
       params.append('page', page);
@@ -43,12 +37,9 @@ export const fetchAssessment = (page, search) => {
     if (page && page.batchName && page.batchName.value) {
       params.append('batch_id', page.batchName.value);
     }
-
-    // Append parameters to URL
     if (params.toString()) {
       url += `?${params.toString()}`;
     }
-
     axios.get(url)
       .then((response) => {
         const assessmentData = response.data;
@@ -88,7 +79,7 @@ export const addAssessment = (requestBody, batchName) => {
           },
         })
         .then((response) => {
-          const addedAssessment = response.data;
+          const addedAssessment = response.data; 
           dispatch(addAssessmentSuccess(addedAssessment));
           return(response);  
         })

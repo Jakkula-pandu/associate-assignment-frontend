@@ -1,4 +1,3 @@
-import { all } from 'axios';
 import headerImage from '../../src/assets/images/Bilvantis_white_logo.png';
 
 export const ERROR_MESSAGES = {
@@ -11,7 +10,12 @@ export const ERROR_MESSAGES = {
     ALL_OPTIONS_MUST_BE_FILLED : "All options must be filled",
     ATLEAST_ONE_OPTION :"At least one option must be selected",
     TEXT :"text",
-    MULTIPLE_CHOICE : "multiple_choice"
+    MULTIPLE_CHOICE : "multiple_choice",
+    BATCH_NAME_IS_REQUIRED : "Batch name is required",
+    ASSESSMENT_NAME_IS_REQUIRED : "Assessment name is required",
+    AT_LEAST_ONE_QUESTION :"Atleast one question is required"
+
+
 
 };
 
@@ -43,6 +47,8 @@ export const FOOTER={
 export const ADD_ASSESSMENT_LABELS = {
    ASSESSMENT_NAME : 'Assessment Name' ,
    BATCH_NAME : 'Batch name',
+   ENTER_NO_OF_QUESTIONS : 'Enter number of questions',
+   NO_OF_QUESTIONS :"Number of questions"
 }
 
 export const ALERT_TEXT ={
