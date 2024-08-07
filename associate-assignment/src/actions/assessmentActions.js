@@ -52,6 +52,7 @@ export const fetchAssessment = (page, search) => {
     axios.get(url)
       .then((response) => {
         const assessmentData = response.data;
+        console.log("assessmentData",assessmentData);
         dispatch(fetchAssessmentSuccess(assessmentData));
       })
       .catch((error) => {
