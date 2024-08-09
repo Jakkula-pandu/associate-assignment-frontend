@@ -16,11 +16,20 @@ const Batches = () => {
   const [searchValue, setSearchValue] = useState('');
   const dataState = useSelector((state) => state.batchdata);
   const totalItems = useSelector((state) => state.batchdata.batches.totalItems);
+  const totalSearchItems = useSelector((state) => state.batchdata.searchTotalItems); // Assuming you track total search results
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
+  const [noRecords, setNoRecords] = useState('');
+  const [minSearchValue, setMinSearchValue] = useState('');
  
   useEffect(() => {
-    dispatch(fetchBatch(currentPage, searchValue));
+   if(searchValue){
+    dispatch(fetchBatch(1,searchValue))
+   }
+   else{
+    dispatch(fetchBatch(currentPage))
+   }
+ 
   }, [dispatch, currentPage, searchValue]);
  
   useEffect(() => {
@@ -37,8 +46,15 @@ const Batches = () => {
         };
       });
       setData(newData);
+      setNoRecords('');
+      setMinSearchValue('');
     }
-  }, [dataState.batches]);
+    else{
+      setData([]);
+      setNoRecords(dataState.batches.message);
+      setMinSearchValue(dataState.error);
+    }
+  }, [dataState.batches,currentPage, searchValue]);
 
   const handleToggle = (index) => {
     setData((prevData) => {
@@ -54,6 +70,7 @@ const Batches = () => {
     }
     // If not showing full list, display first 6 usernames followed by "more..."
     const truncatedUsers = usernames.slice(0, 6).join(', ') + ', ';
+
     return (
       <>
         {truncatedUsers}
@@ -83,12 +100,20 @@ const Batches = () => {
  
   const handleSearchChange = (value) => {
     setSearchValue(value);
+    setCurrentPage(1);
   };
 
   const displayData = data.map((row, index) => ({
     ...row,
     userNames: renderUsers(row.usernames, row.showFullList, index),
   }));
+  const shouldShowPagination = noRecords !== "No records found" && minSearchValue !== 'Request failed with status code 411';
+
+  console.log("currentPage>>>", currentPage);
+  console.log("totalItems>>", totalItems);
+  
+  
+
   return (
     <div>
       <TableData
@@ -98,12 +123,14 @@ const Batches = () => {
         onSearch={handleSearchChange}
         searchValue={searchValue}
       />
+      {(searchValue ? totalSearchItems : totalItems) > 10 && (searchValue ? totalSearchItems : totalItems) !== 0 && (
       <Pagination
         currentPage={currentPage}
         onPageChange={handlePageChange}
         totalItems={totalItems}
         itemsPerPage={10}
       />
+      )}
     </div>
   );
 };

@@ -39,9 +39,9 @@ const QuestionsForm = () => {
       newErrors.assessmentName = ERROR_MESSAGES.ASSESSMENT_NAME_IS_REQUIRED;
     }
 
-      // if (user.length === 0) {
-      //   newErrors.questions = ERROR_MESSAGES.AT_LEAST_ONE_QUESTION;
-      // }
+      if (!formData.questions) {
+        newErrors.questions = ERROR_MESSAGES.AT_LEAST_ONE_QUESTION;
+      }
     user.forEach((q, qIndex) => {
       if (!q.question_text) {
         newErrors[`question_text-${qIndex}`] = ERROR_MESSAGES.QUESTION_IS_REQUIRED;
@@ -340,6 +340,9 @@ const QuestionsForm = () => {
           readOnly
       
         />
+        {errors.questions && (
+            <span className="error error-color">{errors.questions}</span>
+          )}
       
         </div>
         {user.map((key, index) => (
@@ -402,18 +405,7 @@ const QuestionsForm = () => {
                   )}
                   {key.options.map((option, optionIndex) => (
                     <div key={optionIndex}>
-                      <input
-                        id={`option-${index}-${optionIndex}`}
-                        type="text"
-                        placeholder="Add Option"
-                        className="custom-outline-bottom ms-2"
-                        name="option"
-                        value={option.option}
-                        onChange={(e) =>
-                          handleOptionChange(index, optionIndex, e)
-                        }
-                      />
-                      <input
+                       <input
                         type="checkbox"
                         name={`optionGroup-${optionIndex}`}
                         value={option.option}
@@ -423,6 +415,18 @@ const QuestionsForm = () => {
                           handleCheckboxChange(index, optionIndex)
                         }
                       />
+                      <input
+                        id={`option-${index}-${optionIndex}`}
+                        type="text"
+                        placeholder="Add Option"
+                        className="custom-outline-bottom ms-2 form-controls-styling"
+                        name="option"
+                        value={option.option}
+                        onChange={(e) =>
+                          handleOptionChange(index, optionIndex, e)
+                        }
+                      />
+                     
                     </div>
                   ))}
                   {errors[`options-${index}`] && (

@@ -6,7 +6,7 @@ import OffcanvasComponent from '../FormModal/FormModal';
 import TabButtons from '../AddFormButton/AddFormButton';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
+const TableData = ({ columns, data, onSort, onSearch, searchValue,noRecords }) => {
   const [sortConfig, setSortConfig] = useState(null);
 
   const handleSort = (accessor) => {
@@ -30,14 +30,15 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => onSearch(e.target.value)}
+            
           />
+        
         </div>
 
         <div className='col-2'>
           <TabButtons activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
       </div>
-
             <div className="table-responsive tableFixHead table-style">
                 <Table className="table table-hover table-container">
                     <Thead className="table-heading">
@@ -60,15 +61,25 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {data.map((row, rowIndex) => (
-                            <Tr key={rowIndex}>
-                                {columns.map((column) => (
-                                    <Td key={column.accessor}>{row[column.accessor]}</Td>
-                                ))}
-                            </Tr>
-                        ))}
-                    </Tbody>
+          {data.length > 0 ? (
+            data.map((row, index) => (
+              <tr key={index}>
+                {columns.map((column) => (
+                  <td key={column.accessor}>{row[column.accessor]}</td>
+                ))}
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={columns.length} style={{ textAlign: 'center', padding: '10px' }}>
+             
+              {noRecords}
+              </td>
+            </tr>
+          )}
+        </Tbody>
                 </Table>
+                
 
             </div>
         </div>
@@ -77,3 +88,4 @@ const TableData = ({ columns, data, onSort, onSearch, searchValue }) => {
 };
 
 export default TableData;
+

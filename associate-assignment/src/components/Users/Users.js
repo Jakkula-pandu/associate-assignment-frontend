@@ -5,13 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Pagination from "../Pagination/Pagination";
 
 const CheckButton = ({ row }) => {
-  const handleClick = () => {
-  };
+  const handleClick = () => {};
   return <button onClick={handleClick}>Check</button>;
 };
 
 const columns = [
-  { Header: "S.No", accessor: "sno"},
+  { Header: "S.No", accessor: "sno" },
   { Header: "User Name", accessor: "UserName", sortable: true },
   { Header: "Employee id", accessor: "Employeeid", sortable: true },
   { Header: "Email id", accessor: "EmailId", sortable: true },
@@ -24,12 +23,24 @@ const Users = () => {
   const [searchValue, setSearchValue] = useState("");
   const dataState = useSelector((state) => state.userdata);
   const totalItems = useSelector((state) => state.userdata.users.totalItems);
+  const totalSearchItems = useSelector((state) => state.userdata.searchTotalItems); // Assuming you track total search results
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [noRecords, setNoRecords] = useState('');
+  const [minSearchValue, setMinSearchValue] = useState('');
+
+  console.log("totalSearchItems>>>>", totalSearchItems);
+  console.log("searchValue",searchValue);
+  
+  
 
   useEffect(() => {
-    dispatch(fetchData(currentPage,searchValue));
-  }, [dispatch, currentPage,searchValue]);
+    if (searchValue) {
+      dispatch(fetchData(1, searchValue)); // Fetch from page 1 for search
+    } else {
+      dispatch(fetchData(currentPage)); // Fetch based on current page for normal data
+    }
+  }, [dispatch, currentPage, searchValue]);
 
   useEffect(() => {
     if (dataState.users && dataState.users.allUsers && dataState.users.allUsers.length > 0) {
@@ -42,10 +53,14 @@ const Users = () => {
         checkButton: <CheckButton row={row} key={index} />,
       }));
       setLocalData(newData);
+      setNoRecords('');
+      setMinSearchValue('');
     } else {
       setLocalData([]);
+      setNoRecords(dataState.users.message);
+      setMinSearchValue(dataState.error);
     }
-  }, [dataState.users]);
+  }, [dataState.users, currentPage, searchValue]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -61,15 +76,16 @@ const Users = () => {
   };
 
   const handleSearch = (value) => {
-    
     setSearchValue(value);
-    const filteredData = localData.filter((item) =>
-      Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(value.toLowerCase())
-      )
-    );
-    setLocalData(filteredData);
+    setCurrentPage(1); // Reset to first page on search
   };
+
+  // Determine whether to show pagination based on search results or total items
+  const shouldShowPagination = searchValue ? totalSearchItems : totalItems > 10 && (searchValue ? totalSearchItems : totalItems) !== 0;
+console.log("&&",shouldShowPagination);
+
+console.log("currentPage>>>", currentPage);
+console.log("totalItems>>", totalItems);
 
   return (
     <div className="table-pagination-container">
@@ -79,14 +95,16 @@ const Users = () => {
         onSort={handleSort}
         onSearch={handleSearch}
         searchValue={searchValue}
+        emptyMessage="No records found"
       />
-      <Pagination
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-        totalItems={totalItems}
-        itemsPerPage = {10}
-
-      />
+      {(searchValue ? totalSearchItems : totalItems) > 10 && (searchValue ? totalSearchItems : totalItems) !== 0 && (
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          totalItems={searchValue ? totalSearchItems : totalItems}
+          itemsPerPage={10}
+        />
+      )}
     </div>
   );
 };

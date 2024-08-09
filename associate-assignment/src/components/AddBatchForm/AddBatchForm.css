@@ -41,10 +41,16 @@
   .custom-option {
     display: flex;
     align-items: center;
+    white-space: nowrap; /* Prevent text from wrapping */
   }
   
-  .custom-multivalue {
-    display: flex;
-    align-items: center;
+  .custom-option input[type="checkbox"] {
+    margin-right: 8px;
+  }
+  
+  .custom-option span {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap; /* Prevent line breaks in the label */
   }
   

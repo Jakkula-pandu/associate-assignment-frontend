@@ -1,9 +1,12 @@
+
 label{
     font-size: 20px;
     font-weight: 500;
 }
 
+
 .total_container{
+    /* background-image: linear-gradient(to bottom, rgb(0, 153, 255), rgb(0, 213, 255)); */
     min-height: 100vh;
     display: flex;
     justify-content: center;

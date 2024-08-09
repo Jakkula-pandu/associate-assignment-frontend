@@ -18,7 +18,7 @@ const Option = (props) => {
           checked={props.isSelected}
           onChange={() => null}
         />
-        <label>{props.label}</label>
+   <span>{props.label}</span>
       </div>
     </components.Option>
   );
@@ -47,7 +47,10 @@ const AddBatchForm = ({ handleCloseOffcanvas }) => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.userdata);
   const loading = useSelector((state) => state.userdata.loading);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({
+    batch_name: "",
+    users: []
+  });
 
   useEffect(() => {
     dispatch(fetchData());
@@ -87,7 +90,7 @@ const AddBatchForm = ({ handleCloseOffcanvas }) => {
 
       setErrors((prevErrors) => ({
         ...prevErrors,
-        users: allSelected ? "At least one User Name is required" : "",
+        users: allSelected ? "" : "At least one User Name is required",
       }));
     } else {
       setFormData({
@@ -97,20 +100,13 @@ const AddBatchForm = ({ handleCloseOffcanvas }) => {
           : [],
       });
 
-      if (!selectedOptions || selectedOptions.length === 0) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          username: "At least one User is required",
-        }));
-      } else {
-        setErrors((prevErrors) => {
-          const newErrors = { ...prevErrors };
-          delete newErrors.username;
-          return newErrors;
-        });
-      }
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        users: selectedOptions.length === 0 ? "At least one User is required" : "",
+      }));
     }
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -216,7 +212,7 @@ const AddBatchForm = ({ handleCloseOffcanvas }) => {
               }),
             }}
           />
-          {errors.username && (
+          {errors.users && (
             <span className="error error-color">{errors.users}</span>
           )}
         </div>
@@ -230,5 +226,3 @@ const AddBatchForm = ({ handleCloseOffcanvas }) => {
 };
 
 export default AddBatchForm;
-
-

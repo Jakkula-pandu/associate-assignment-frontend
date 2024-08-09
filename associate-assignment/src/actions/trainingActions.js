@@ -3,7 +3,7 @@ import { API_URLS } from "../constants/Apiurls";
 import {
     FETCH_TRAINING_DATA,
     FETCH_TRAINING_SUCCESS,
-    FETCH_TRAINING_FAILURE,
+    FETCH_TRAINING_FAILURE, 
   } from "../actionTypes/TrainingActionTypes";
 
   export const fetchTrainingRequest = () => ({

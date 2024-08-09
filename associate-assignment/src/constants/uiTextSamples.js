@@ -13,7 +13,7 @@ export const ERROR_MESSAGES = {
     MULTIPLE_CHOICE : "multiple_choice",
     BATCH_NAME_IS_REQUIRED : "Batch name is required",
     ASSESSMENT_NAME_IS_REQUIRED : "Assessment name is required",
-    AT_LEAST_ONE_QUESTION :"Atleast one question is required"
+    AT_LEAST_ONE_QUESTION :"Number of questions is required"
 
 
 

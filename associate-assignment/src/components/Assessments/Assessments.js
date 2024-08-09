@@ -5,7 +5,6 @@ import { fetchAssessment } from '../../actions/assessmentActions';
 import Pagination from '../Pagination/Pagination';
 import moment from 'moment';
 
-
 const CheckButton = ({ row }) => {
   const handleClick = () => {
   };
@@ -16,9 +15,8 @@ const columns = [
   { Header: 'S.No', accessor: 'sno' },
   { Header: 'Assessment Name', accessor: 'assessmentName', sortable: true },
   { Header: 'Batch Name', accessor: 'batchName', sortable: true },
-  {Header:'Created Date', accessor:'createdDate', sortable:true}
+  { Header: 'Created Date', accessor: 'createdDate', sortable: true }
 ];
-
 
 const Assessments = () => {
   const [assessmentData, setAssessmentData] = useState([]);
@@ -27,9 +25,16 @@ const Assessments = () => {
   const [searchValue, setSearchValue] = useState('');
   const dataState = useSelector((state) => state.assessmentData);
   const dispatch = useDispatch();
+  const [noRecords, setNoRecords] = useState('');
+  const [minSearchValue, setMinSearchValue] = useState('');
+  const totalSearchItems = useSelector((state) => state.assessmentData.searchTotalItems);
 
   useEffect(() => {
-    dispatch(fetchAssessment(currentPage, searchValue));
+    if (searchValue) {
+      dispatch(fetchAssessment(1, searchValue));
+    } else {
+      dispatch(fetchAssessment(currentPage));
+    }
   }, [dispatch, currentPage, searchValue]);
 
   useEffect(() => {
@@ -38,12 +43,17 @@ const Assessments = () => {
         sno: (currentPage - 1) * 10 + index + 1,
         assessmentName: row.assessment_name,
         batchName: row.role.batch_name,
-        createdDate: moment(row.created_date).format('YYYY-MM-DD'),
-      }));    
+        createdDate: moment(row.created_date).format('MM/DD/YYYY'),
+      }));
       setAssessmentData(newData);
+      setNoRecords('');
+      setMinSearchValue('');
+    } else {
+      setAssessmentData([]);
+      setNoRecords('No records found');
+      setMinSearchValue(dataState.error);
     }
-  }, [dataState, dataState.assessments,currentPage, searchValue]);
-  
+  }, [dataState, currentPage, searchValue]);
 
   const handleSort = (key, direction) => {
     const sortedData = [...assessmentData].sort((a, b) => {
@@ -54,14 +64,16 @@ const Assessments = () => {
     setAssessmentData(sortedData);
   };
 
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
   const handleSearchChange = (value) => {
     setSearchValue(value);
+    setCurrentPage(1);
   };
+
+  const shouldShowPagination = noRecords !== "No records found" && minSearchValue !== 'Request failed with status code 411';
 
   return (
     <div>
@@ -69,16 +81,18 @@ const Assessments = () => {
         columns={columns}
         data={assessmentData}
         onSort={handleSort}
-      onSearch={handleSearchChange}
-      searchValue={searchValue}
+        onSearch={handleSearchChange}
+        searchValue={searchValue}
+        noRecords={noRecords}
       />
-
-      <Pagination
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-        totalItems={totalItems}
-        itemsPerPage={10}
-      />
+      {shouldShowPagination && (searchValue ? totalSearchItems : totalItems) > 10 && (
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          totalItems={totalItems}
+          itemsPerPage={10}
+        />
+      )}
     </div>
   );
 };

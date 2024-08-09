@@ -148,6 +148,7 @@ const AddAssessmentForm = ({ handleCloseOffcanvas }) => {
           id="assessmentName"
           name="assessmentName"
           className="form-control"
+          placeholder="Enter Assessment name"
           value={formData.assessmentName}
           onChange={(e) => onHandleChange(e.target.value, "assessmentName")}
         />
